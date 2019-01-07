@@ -1,9 +1,14 @@
-import React, {Component} from 'react'
+//@flow
 
-export default class extends Component {
+import React, { Component } from "react";
+import "./index.css";
+
+export default class Survey extends Component<void> {
   render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
+    return (
+      <div className="s-holder">
+        <div>test</div>
+      </div>
+    );
   }
 }

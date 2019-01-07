@@ -1,0 +1,28 @@
+.s-holder {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.s-item {
+  width: 80%;
+  height: 60%;
+  background-color: rgba(100, 100, 40, 0.3);
+  margin-top: 5%;
+  display: inline-block;
+}
+
+.previous {
+  position: relative;
+  top: -60%;
+}
+
+.current {
+  position: relative;
+  top: -60%;
+}
+
+.next {
+  position: relative;
+  top: -60%;
+}

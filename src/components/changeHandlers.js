@@ -1,16 +1,22 @@
-//@flow
+import type { SurveyItemType } from "./flowTypes.js";
 
 export default function changeHandlers(
-  type: string
-): (event: SyntheticEvent<>, ctx: any) => mixed {
+  type: string,
+  idx: number
+): (event: SyntheticEvent<>, ctx: any, idx: number) => mixed {
   switch (type) {
     case "checkbox":
-      return (event: SyntheticEvent<>, ctx: any) => {
-        ctx.setState({ checked: !ctx.state.checked });
+      return (event: SyntheticEvent<>, ctx: any, idx) => {
+        const prevState: SurveyItemType[] = ctx.state.items;
+        const newState: SurveyItemType[] = ctx.state.items.slice();
+        newState[idx].surveyItemState = {
+          checked: !prevState[idx].surveyItemState.checked
+        };
+        ctx.setState({ items: newState });
       };
     default:
       return () => {
-        console.log("No event logged!");
+        console.warn(`No event of type ${type} found!`);
       };
   }
 }

@@ -2,23 +2,23 @@
 import React from "react";
 
 type Props = {
-  checked: boolean,
-  onChange: (event: SyntheticEvent<>) => mixed
+  onChange: (event: SyntheticEvent<>) => mixed,
+  itemState: any
 };
 
 const SurveyCheckbox = (props: Props) => {
   return (
     <input
       type="checkbox"
-      checked={props.checked}
+      checked={props.itemState.checked}
       onChange={props.onChange}
-      {...props}
     />
   );
 };
 
 SurveyCheckbox.defaultProps = {
-  checked: false
+  checked: false,
+  itemState: { checked: false }
 };
 
 export default SurveyCheckbox;

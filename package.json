@@ -39,6 +39,7 @@
     "react-component"
   ],
   "dependencies": {
-    "expect-element": "^1.1.1"
+    "expect-element": "^1.1.1",
+    "hoek": "^6.1.2"
   }
 }

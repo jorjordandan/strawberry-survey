@@ -3,12 +3,13 @@
 import React, { Component, Fragment } from "react";
 import SurveyQuestion from "./SurveyQuestion";
 import SurveyCheckbox from "./SurveyCheckbox";
-import changeHandlers from "./changeHandlers.js";
+// import changeHandlers from "./changeHandlers.js";
 import type { SurveyItemType, Options } from "./flowTypes.js";
 
 type Props = {
   item: SurveyItemType,
-  handleChange: (any, any) => mixed
+  handleChange: (any, any) => mixed,
+  itemState: any
 };
 
 type State = {
@@ -29,8 +30,7 @@ const defaults = {
 class SurveyItem extends Component<Props, State> {
   state = {
     answer: [],
-    checked: false,
-    surveyItemState: this.props.item.surveyItemState
+    checked: false
   };
 
   static defaultProps = {
@@ -42,6 +42,7 @@ class SurveyItem extends Component<Props, State> {
   //   handler(event, this);
   // };
   //onChange={this.handle.bind(this, type)}
+
   getComponentOfType = (type: string, required: boolean, options: Options) => {
     switch (type) {
       case "checkbox":
@@ -51,6 +52,7 @@ class SurveyItem extends Component<Props, State> {
             required={required}
             options={options}
             checked={this.state.checked}
+            itemState={this.props.itemState}
           />
         );
 

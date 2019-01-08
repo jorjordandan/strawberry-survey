@@ -25,9 +25,12 @@ describe("SurveyCheckbox", () => {
     );
   });
 
-  it("displays the checkbox checked when passed checked prop", () => {
+  it("displays the checkbox checked when passed item state of {checked: true}", () => {
     render(
-      <SurveyCheckbox onChange={() => console.log("boop")} checked />, //fake changeHandler to allow passing checked prop
+      <SurveyCheckbox
+        onChange={() => console.log("boop")}
+        itemState={{ checked: true }}
+      />, //fake changeHandler to allow passing checked prop
       node,
       () => {
         expect(node.innerHTML).toContain("checked");

@@ -15,7 +15,7 @@ image goes here.
 
 To install:
 `npm --save strawberry-survey`
-To start, import the Survey element and create an array of question items like this, or use the survey builder to create your survey array:
+To start, import the Survey element and create an array of question items:
 
 ```
 import Survey from 'strawberry-survey';
@@ -49,8 +49,24 @@ To see the survey results, pass a `handleComplete` function to the survey:
 
 ```
 handleComplete = results => {
- console.log(results)
+ console.log(results);
 }
+//output:
+[
+  {
+    question: "Are you a robot?"
+    completed: true,
+    skipped: false,
+    response: [true] //responses depend on question type.
+
+  },
+  {
+  question: "Do you like being a robot?",
+  completed: true,
+  skipped: false,
+  response: [true]
+  }
+]
 
 <Survey items={survey} onComplete={handleComplete}>
 ```
@@ -59,7 +75,7 @@ handleComplete = results => {
 
 #### checkbox
 
-The Checkbox component provides a simple checkbox. You can add an optional label, or specify it's requiredTrue, for instance if you need them to agree to something to continue the survey.
+The Checkbox component provides a simple checkbox. You can add an optional label, or specify it's requiredTrue, for example, if you need the user's consnet to continue the survey.
 Example:
 
 ```
@@ -69,9 +85,22 @@ Example:
     required: true, //optional, will default to false
     options: {
       label: "I'm a robot",
-      requiredTrue: true, //if you need them to click the checkbox to indicate agreement to continue, use this
+      requiredTrue: true, //if you need users to indicate agreement to continue, use this
     }
   },
+```
+
+All responses are returned as arrays, which may contain ints, strings, or booleans,depending on the question type. A checkbox response is a boolean in an array:
+
+```
+[
+  {
+    question: "Are you a robot?",
+    completed: true,
+    skipped: false,
+    response: [true] //example checkbox response
+  }
+]
 ```
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square

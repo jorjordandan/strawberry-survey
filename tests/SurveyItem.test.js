@@ -40,15 +40,23 @@ describe("SurveyItem", () => {
     unmountComponentAtNode(node);
   });
 
-  it("displays the question pass to surveyItem", () => {
-    render(<SurveyItem item={survey[0]} />, node, () => {
-      expect(node.innerHTML).toContain("Are you a robot?*");
-    });
+  it("displays the question passed to surveyItem", () => {
+    render(
+      <SurveyItem item={survey[0]} handleChange={() => console.log("boop")} />,
+      node,
+      () => {
+        expect(node.innerHTML).toContain("Are you a robot?*");
+      }
+    );
   });
 
   it("displays a checkbox passed to surveyItem", () => {
-    render(<SurveyItem item={survey[0]} />, node, () => {
-      expect(node.innerHTML).toContain('type="checkbox"');
-    });
+    render(
+      <SurveyItem item={survey[0]} handleChange={() => console.log("boop")} />,
+      node,
+      () => {
+        expect(node.innerHTML).toContain('type="checkbox"');
+      }
+    );
   });
 });

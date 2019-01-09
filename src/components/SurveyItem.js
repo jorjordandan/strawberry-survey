@@ -37,12 +37,6 @@ class SurveyItem extends Component<Props, State> {
     item: { ...defaults }
   };
 
-  // handle = (type: string, event: SyntheticEvent<>) => {
-  //   const handler = changeHandlers(type);
-  //   handler(event, this);
-  // };
-  //onChange={this.handle.bind(this, type)}
-
   getComponentOfType = (type: string, required: boolean, options: Options) => {
     switch (type) {
       case "checkbox":

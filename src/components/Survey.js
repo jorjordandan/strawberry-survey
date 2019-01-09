@@ -31,10 +31,6 @@ export default class Survey extends Component<Props, State> {
     handler(event, this, idx);
   };
 
-  // itemStateDebug = state => {
-  //   return state;
-  // };
-
   render() {
     return (
       <Fragment>

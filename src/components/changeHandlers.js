@@ -1,3 +1,4 @@
+//@flow
 import type { SurveyItemType } from "./flowTypes.js";
 
 export default function changeHandlers(
@@ -10,7 +11,7 @@ export default function changeHandlers(
         const prevState: SurveyItemType[] = ctx.state.items;
         const newState: SurveyItemType[] = ctx.state.items.slice();
         newState[idx].surveyItemState = {
-          checked: !prevState[idx].surveyItemState.checked
+          checked: !prevState[idx].surveyItemState.checked //this error... why?
         };
         ctx.setState({ items: newState });
       };

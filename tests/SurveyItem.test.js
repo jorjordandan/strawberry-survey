@@ -3,6 +3,7 @@ import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 
 import SurveyItem from "../src/components/SurveyItem";
+import SurveyCheckbox from "../src/components/SurveyCheckbox";
 
 const survey = [
   {
@@ -52,7 +53,12 @@ describe("SurveyItem", () => {
 
   it("displays a checkbox passed to surveyItem", () => {
     render(
-      <SurveyItem item={survey[0]} handleChange={() => console.log("boop")} />,
+      <SurveyItem
+        item={survey[0]}
+        surveyComponent={
+          <SurveyCheckbox onChange={() => {}} itemState={{ checked: false }} />
+        }
+      />,
       node,
       () => {
         expect(node.innerHTML).toContain('type="checkbox"');

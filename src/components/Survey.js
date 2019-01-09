@@ -1,6 +1,6 @@
 //@flow
 import React, { Component, Fragment } from "react";
-import type { SurveyItemType } from "./flowTypes.js";
+import type { SurveyItemType, surveyItemState } from "./flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
 import changeHandlers from "./changeHandlers.js";
 import getStateForComponentType from "./getStateForComponentType.js";
@@ -29,12 +29,17 @@ export default class Survey extends Component<Props, State> {
     this.setState({ items: itemsWithState });
   }
 
-  handle = (type: string, idx: number, event: SyntheticEvent<>): void => {
+  handle = (type: string, idx: number, event?: SyntheticEvent<>): void => {
     const handler = changeHandlers(type, idx);
+    // $FlowFixMe
     handler(event, this, idx);
   };
 
-  buildSurveyComponent(handler, state, type) {
+  buildSurveyComponent(
+    handler: () => mixed,
+    state: surveyItemState,
+    type: string
+  ) {
     switch (type) {
       case "checkbox":
         return <SurveyCheckbox onChange={handler} itemState={state} />;
@@ -43,6 +48,7 @@ export default class Survey extends Component<Props, State> {
         return <p>{type} is not a valid Survey component.</p>;
     }
   }
+
   render() {
     return (
       <Fragment>
@@ -51,10 +57,9 @@ export default class Survey extends Component<Props, State> {
             <SurveyItem
               item={item}
               key={idx}
-              handleChange={this.handle.bind(this, item.type, idx)}
-              itemState={item.surveyItemState}
               surveyComponent={this.buildSurveyComponent(
                 this.handle.bind(this, item.type, idx),
+                // $FlowFixMe
                 item.surveyItemState,
                 item.type
               )}

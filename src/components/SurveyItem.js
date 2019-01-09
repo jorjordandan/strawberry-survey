@@ -2,7 +2,7 @@
 
 import React, { Component, Fragment } from "react";
 import SurveyQuestion from "./SurveyQuestion";
-import type { SurveyItemType, Options } from "./flowTypes.js";
+import type { SurveyItemType } from "./flowTypes.js";
 
 type Props = {
   item: SurveyItemType,
@@ -36,7 +36,7 @@ class SurveyItem extends Component<Props, State> {
 
   render() {
     const {
-      item: { question, required, options }
+      item: { question, required }
     } = this.props;
     return (
       <Fragment>

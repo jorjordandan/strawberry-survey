@@ -1,18 +1,16 @@
 //@flow
 import React from "react";
+import { Checkbox } from "@material-ui/core";
+import type { surveyItemState } from "./flowTypes.js";
 
 type Props = {
   onChange: (event: SyntheticEvent<>) => mixed,
-  itemState: any
+  itemState: surveyItemState
 };
 
 const SurveyCheckbox = (props: Props) => {
   return (
-    <input
-      type="checkbox"
-      checked={props.itemState.checked}
-      onChange={props.onChange}
-    />
+    <Checkbox checked={props.itemState.checked} onChange={props.onChange} />
   );
 };
 

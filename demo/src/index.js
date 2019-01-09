@@ -2,11 +2,13 @@ import React, { Component, Fragment } from "react";
 import { render } from "react-dom";
 import Survey from "../../src/components/Survey.js";
 import { createGlobalStyle } from "styled-components";
+import Typography from "@material-ui/core/Typography";
 
 const GlobalStyles = createGlobalStyle`
 body {
-  font-family: s-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size: 1.5em;
+  .survey-question {
+    padding-left: 1em;
+  }
 }
   `;
 
@@ -44,7 +46,9 @@ class Demo extends Component {
     return (
       <Fragment>
         <GlobalStyles />
-        <h1>Strawberry-Survey Demo</h1>
+        <Typography variant="h2" gutterBottom>
+          Strawberry-Survey Demo
+        </Typography>
         <div style={containerStyle}>
           <Survey items={survey} options={SurveyOptions} />
         </div>

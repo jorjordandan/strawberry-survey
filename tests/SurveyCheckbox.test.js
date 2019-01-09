@@ -20,7 +20,8 @@ describe("SurveyCheckbox", () => {
       <SurveyCheckbox onChange={() => console.log("boop")} />,
       node,
       () => {
-        expect(node.innerHTML).toContain('<input type="checkbox">');
+        expect(node.innerHTML).toContain("<input");
+        expect(node.innerHTML).toContain('type="checkbox"');
       }
     );
   });

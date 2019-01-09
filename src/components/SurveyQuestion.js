@@ -1,6 +1,7 @@
 //@flow
 
 import React from "react";
+import Typography from "@material-ui/core/Typography";
 
 type Props = {
   number?: number,
@@ -26,9 +27,11 @@ function addActiveClass(active: boolean): string {
 function SurveyQuestion(props: Props) {
   return (
     <div className={addActiveClass(props.active)}>
-      {props.number && props.number.toString() + ". "}
-      {props.question}
-      {props.required && "*"}
+      <Typography variant="h4" gutterBottom>
+        {props.number && props.number.toString() + ". "}
+        {props.question}
+        {props.required && "*"}
+      </Typography>
     </div>
   );
 }

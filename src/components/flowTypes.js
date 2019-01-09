@@ -4,6 +4,10 @@ export type Options = {
   forwardOnly?: boolean
 };
 
+export type surveyItemState = {
+  checked?: boolean
+};
+
 export type SurveyItemType = {
   question: string,
   type: string,
@@ -13,7 +17,5 @@ export type SurveyItemType = {
   completed: false,
   skipped: false,
   response: string[],
-  surveyItemState?: {
-    checked?: boolean
-  }
+  surveyItemState?: surveyItemState
 };

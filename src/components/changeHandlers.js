@@ -8,10 +8,9 @@ export default function changeHandlers(
   switch (type) {
     case "checkbox":
       return (event: SyntheticEvent<>, ctx: any, idx) => {
-        const prevState: SurveyItemType[] = ctx.state.items;
-        const newState: SurveyItemType[] = ctx.state.items.slice();
+        const { prevState, newState } = getStates(ctx);
         newState[idx].surveyItemState = {
-          checked: !prevState[idx].surveyItemState.checked //this error... why?
+          checked: !prevState[idx].surveyItemState.checked
         };
         ctx.setState({ items: newState });
       };
@@ -20,4 +19,11 @@ export default function changeHandlers(
         console.warn(`No event of type ${type} found!`);
       };
   }
+}
+
+function getStates(ctx) {
+  let states = {};
+  states.prevState = ctx.state.items;
+  states.newState = ctx.state.items.slice();
+  return states;
 }

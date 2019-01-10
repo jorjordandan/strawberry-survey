@@ -1,5 +1,4 @@
 //@flow
-import type { SurveyItemType } from "./flowTypes.js";
 
 export default function changeHandlers(
   type: string,

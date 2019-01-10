@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { render } from "react-dom";
 import Survey from "../../src/components/Survey.js";
 import { createGlobalStyle } from "styled-components";
@@ -44,7 +44,7 @@ const SurveyOptions = {
 class Demo extends Component {
   render() {
     return (
-      <Fragment>
+      <div style={{ height: "100vh" }}>
         <GlobalStyles />
         <Typography variant="h2" gutterBottom>
           Strawberry-Survey Demo
@@ -52,14 +52,14 @@ class Demo extends Component {
         <div style={containerStyle}>
           <Survey items={survey} options={SurveyOptions} />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }
 
 const containerStyle = {
-  width: 1000,
-  height: 1000
+  width: "100%",
+  height: "100%"
 };
 
 render(<Demo />, document.querySelector("#demo"));

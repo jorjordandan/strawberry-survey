@@ -1,12 +1,14 @@
 //@flow
 
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import SurveyQuestion from "./SurveyQuestion";
 import type { SurveyItemType } from "./flowTypes.js";
+import styled from "styled-components";
 
 type Props = {
   item: SurveyItemType,
-  surveyComponent: React$Element<any>
+  surveyComponent: React$Element<any>,
+  active: boolean
 };
 
 type State = {
@@ -39,12 +41,23 @@ class SurveyItem extends Component<Props, State> {
       item: { question, required }
     } = this.props;
     return (
-      <Fragment>
-        <SurveyQuestion question={question} required={required} />
+      <SurveyItemContainer>
+        <SurveyQuestion
+          question={question}
+          required={required}
+          active={this.props.active}
+        />
         {this.props.surveyComponent}
-      </Fragment>
+      </SurveyItemContainer>
     );
   }
 }
+
+const SurveyItemContainer = styled.div`
+  padding-bottom: 60px;
+  .inactive {
+    opacity: 0.3;
+  }
+`;
 
 export default SurveyItem;

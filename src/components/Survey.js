@@ -11,12 +11,14 @@ type Props = {
 };
 
 type State = {
-  items: SurveyItemType[]
+  items: SurveyItemType[],
+  currentItem: number
 };
 
 export default class Survey extends Component<Props, State> {
   state = {
-    items: this.props.items
+    items: this.props.items,
+    currentItem: 0
   };
 
   componentDidMount() {
@@ -38,11 +40,20 @@ export default class Survey extends Component<Props, State> {
   buildSurveyComponent(
     handler: () => mixed,
     state: surveyItemState,
-    type: string
+    options: any,
+    type: string,
+    idx: number
   ) {
     switch (type) {
       case "checkbox":
-        return <SurveyCheckbox onChange={handler} itemState={state} />;
+        return (
+          <SurveyCheckbox
+            onChange={handler}
+            itemState={state}
+            options={options}
+            active={this.state.currentItem === idx}
+          />
+        );
 
       default:
         return <p>{type} is not a valid Survey component.</p>;
@@ -52,16 +63,21 @@ export default class Survey extends Component<Props, State> {
   render() {
     return (
       <Fragment>
+        <div style={{ height: "30vh" }} />
+
         {this.state.items &&
           this.state.items.map((item, idx) => (
             <SurveyItem
               item={item}
               key={idx}
+              active={this.state.currentItem === idx}
               surveyComponent={this.buildSurveyComponent(
                 this.handle.bind(this, item.type, idx),
                 // $FlowFixMe
                 item.surveyItemState,
-                item.type
+                item.options,
+                item.type,
+                idx
               )}
             />
           ))}

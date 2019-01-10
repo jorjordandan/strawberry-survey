@@ -20,7 +20,7 @@ function addActiveClass(active: boolean): string {
   if (active) {
     return defaultClasses + " active";
   } else {
-    return defaultClasses;
+    return defaultClasses + " inactive";
   }
 }
 

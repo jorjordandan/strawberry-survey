@@ -1,7 +1,9 @@
 //@flow
+import type { checkboxProps } from "../components/SurveyCheckbox";
 
 export type Options = {
-  forwardOnly?: boolean
+  forwardOnly?: boolean,
+  label?: string
 };
 
 export type surveyItemState = {
@@ -18,4 +20,13 @@ export type SurveyItemType = {
   skipped: false,
   response: string[],
   surveyItemState?: surveyItemState
+};
+
+export type Lib = {
+  checkbox: {
+    component: checkboxProps => mixed,
+    handler: () => mixed,
+    state?: surveyItemState,
+    options?: Options
+  }
 };

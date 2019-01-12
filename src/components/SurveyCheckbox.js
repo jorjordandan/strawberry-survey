@@ -1,13 +1,18 @@
 //@flow
 import React from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
-import type { surveyItemState } from "./flowTypes.js";
+import type { surveyItemState, Options } from "../lib/flowTypes.js";
+import { getStates } from "../lib/utilities.js";
 
 type Props = {
   onChange: (event: SyntheticEvent<>) => mixed,
   itemState: surveyItemState,
-  options: any,
+  options: Options,
   active: boolean
+};
+
+type State = {
+  checked: boolean
 };
 
 const SurveyCheckbox = (props: Props) => {
@@ -30,4 +35,20 @@ SurveyCheckbox.defaultProps = {
   itemState: { checked: false }
 };
 
+const checkboxHandler = () => {
+  return (event: SyntheticEvent<>, ctx: React$Element<any>, idx: number) => {
+    const { prevState, newState } = getStates(ctx);
+    newState[idx].surveyItemState = {
+      checked: !prevState[idx].surveyItemState.checked
+    };
+    ctx.setState({ items: newState });
+  };
+};
+
+const checkboxState = (): State => {
+  return { checked: false };
+};
+
 export default SurveyCheckbox;
+export { checkboxHandler, checkboxState };
+export type { Props as checkboxProps };

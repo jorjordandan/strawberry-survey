@@ -1,10 +1,13 @@
 //@flow
-import React, { Component, Fragment } from "react";
-import type { SurveyItemType, surveyItemState } from "./flowTypes.js";
+import * as React from "react";
+import type {
+  SurveyItemType,
+  surveyItemState,
+  Lib,
+  Options
+} from "../lib/flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
-import changeHandlers from "./changeHandlers.js";
-import getStateForComponentType from "./getStateForComponentType.js";
-import SurveyCheckbox from "./SurveyCheckbox";
+import surveyLib from "../lib/surveyLib";
 
 type Props = {
   items: SurveyItemType[]
@@ -12,76 +15,73 @@ type Props = {
 
 type State = {
   items: SurveyItemType[],
-  currentItem: number
+  currentItem: number,
+  lib: Lib
 };
 
-export default class Survey extends Component<Props, State> {
+export default class Survey extends React.Component<Props, State> {
   state = {
     items: this.props.items,
-    currentItem: 0
+    currentItem: 0,
+    lib: surveyLib()
   };
 
   componentDidMount() {
     const { items } = this.props;
     const itemsWithState = items.map(item => {
       let type = item.type;
-      item.surveyItemState = getStateForComponentType(type);
+      item.surveyItemState = this.state.lib[type].state();
       return item;
     });
     this.setState({ items: itemsWithState });
   }
 
   handle = (type: string, idx: number, event?: SyntheticEvent<>): void => {
-    const handler = changeHandlers(type, idx);
-    // $FlowFixMe
+    const handler = this.state.lib[type].handler();
     handler(event, this, idx);
   };
 
   buildSurveyComponent(
     handler: () => mixed,
     state: surveyItemState,
-    options: any,
+    options: Options,
     type: string,
     idx: number
   ) {
-    switch (type) {
-      case "checkbox":
-        return (
-          <SurveyCheckbox
-            onChange={handler}
-            itemState={state}
-            options={options}
-            active={this.state.currentItem === idx}
-          />
-        );
-
-      default:
-        return <p>{type} is not a valid Survey component.</p>;
-    }
+    console.log(state);
+    const props = {
+      onChange: handler,
+      itemState: state,
+      options: options,
+      active: this.state.currentItem === idx
+    };
+    return React.createElement(this.state.lib[type].component, props, null);
   }
 
   render() {
     return (
-      <Fragment>
+      <React.Fragment>
         <div style={{ height: "30vh" }} />
 
         {this.state.items &&
-          this.state.items.map((item, idx) => (
-            <SurveyItem
-              item={item}
-              key={idx}
-              active={this.state.currentItem === idx}
-              surveyComponent={this.buildSurveyComponent(
-                this.handle.bind(this, item.type, idx),
-                // $FlowFixMe
-                item.surveyItemState,
-                item.options,
-                item.type,
-                idx
-              )}
-            />
-          ))}
-      </Fragment>
+          this.state.items.map((item, idx) => {
+            return (
+              <SurveyItem
+                item={item}
+                key={idx}
+                active={this.state.currentItem === idx}
+                surveyComponent={this.buildSurveyComponent(
+                  this.handle.bind(this, item.type, idx),
+                  // $FlowFixMe
+                  item.surveyItemState,
+                  item.options,
+                  item.type,
+                  idx
+                )}
+              />
+            );
+          })}
+      </React.Fragment>
     );
   }
 }

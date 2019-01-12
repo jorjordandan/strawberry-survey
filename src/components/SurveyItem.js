@@ -1,9 +1,9 @@
 //@flow
 
-import React, { Component } from "react";
+import * as React from "react";
 import SurveyQuestion from "./SurveyQuestion";
-import type { SurveyItemType } from "./flowTypes.js";
-import styled from "styled-components";
+import type { SurveyItemType } from "../lib/flowTypes.js";
+import styled, { type ReactComponentStyled } from "styled-components";
 
 type Props = {
   item: SurveyItemType,
@@ -26,7 +26,7 @@ const defaults = {
   response: []
 };
 
-class SurveyItem extends Component<Props, State> {
+class SurveyItem extends React.Component<Props, State> {
   state = {
     answer: [],
     checked: false
@@ -53,7 +53,7 @@ class SurveyItem extends Component<Props, State> {
   }
 }
 
-const SurveyItemContainer = styled.div`
+const SurveyItemContainer: ReactComponentStyled<any> = styled.div`
   padding-bottom: 60px;
   .inactive {
     opacity: 0.3;

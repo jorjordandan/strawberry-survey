@@ -8,7 +8,9 @@ import styled, { type ReactComponentStyled } from "styled-components";
 type Props = {
   item: SurveyItemType,
   surveyComponent: React$Element<any>,
-  active: boolean
+  active: boolean,
+  idx: number,
+  getRef: (ref: any, i: number) => mixed
 };
 
 type State = {
@@ -32,16 +34,22 @@ class SurveyItem extends React.Component<Props, State> {
     checked: false
   };
 
+  itemEl: ?HTMLDivElement;
+
   static defaultProps = {
     item: { ...defaults }
   };
+
+  componentDidMount() {
+    this.props.getRef(this.itemEl, this.props.idx);
+  }
 
   render() {
     const {
       item: { question, required }
     } = this.props;
     return (
-      <SurveyItemContainer>
+      <SurveyItemContainer ref={i => (this.itemEl = i)}>
         <SurveyQuestion
           question={question}
           required={required}

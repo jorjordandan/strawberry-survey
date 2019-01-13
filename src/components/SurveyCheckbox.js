@@ -3,6 +3,7 @@ import React from "react";
 import { Checkbox, FormControlLabel } from "@material-ui/core";
 import type { surveyItemState, Options } from "../lib/flowTypes.js";
 import { getStates } from "../lib/utilities.js";
+import Survey from "../components/Survey.js";
 
 type Props = {
   onChange: (event: SyntheticEvent<>) => mixed,
@@ -36,12 +37,17 @@ SurveyCheckbox.defaultProps = {
 };
 
 const checkboxHandler = () => {
-  return (event: SyntheticEvent<>, ctx: React$Element<any>, idx: number) => {
+  return (
+    event: SyntheticEvent<>,
+    ctx: React$ElementRef<typeof Survey>,
+    idx: number
+  ) => {
     const { prevState, newState } = getStates(ctx);
     newState[idx].surveyItemState = {
       checked: !prevState[idx].surveyItemState.checked
     };
     ctx.setState({ items: newState });
+    ctx.completeItem();
   };
 };
 

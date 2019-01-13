@@ -19,11 +19,11 @@ export type SurveyItemType = {
   completed: false,
   skipped: false,
   response: string[],
-  surveyItemState?: surveyItemState
+  surveyItemState: surveyItemState
 };
 
-export type Lib = {
-  checkbox: {
+export type surveyLibrary = {
+  checkbox?: {
     component: checkboxProps => mixed,
     handler: () => mixed,
     state?: surveyItemState,

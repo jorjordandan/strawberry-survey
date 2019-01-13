@@ -1,11 +1,12 @@
 // @flow
-import type { surveyItemType } from "./flowTypes";
+import type { SurveyItemType } from "./flowTypes";
+import Survey from "../components/Survey.js";
 
 type States = {
-  prevState: surveyItemType[],
-  newState: surveyItemType[]
+  prevState: SurveyItemType[],
+  newState: SurveyItemType[]
 };
-export function getStates(ctx: any): States {
+export function getStates(ctx: React$ElementRef<typeof Survey>): States {
   let states = {};
   states.prevState = ctx.state.items;
   states.newState = ctx.state.items.slice();

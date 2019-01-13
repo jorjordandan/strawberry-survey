@@ -1,12 +1,17 @@
 // @flow
-import type { Lib } from "./flowTypes.js";
+import type { surveyLibrary } from "./flowTypes.js";
 
 import SurveyCheckbox, {
   checkboxHandler,
   checkboxState
 } from "../components/SurveyCheckbox";
 
-export default function surveyLib(): Lib {
+// this function imports the survey components, their handlers,
+// their state, and the components themselves, and assembles them
+// into a library. This allows the Survey component to build the
+// different survey by type.
+
+export default function surveyLib(): surveyLibrary {
   console.log("building library...");
   let surveyLib = {};
 

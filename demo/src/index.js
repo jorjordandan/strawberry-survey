@@ -6,9 +6,7 @@ import Typography from "@material-ui/core/Typography";
 
 const GlobalStyles = createGlobalStyle`
 body {
-  .survey-question {
-    padding-left: 1em;
-  }
+
 }
   `;
 

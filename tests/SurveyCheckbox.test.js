@@ -4,6 +4,8 @@ import { render, unmountComponentAtNode } from "react-dom";
 
 import SurveyCheckbox from "../src/components/SurveyCheckbox";
 
+const options = { label: "test label" };
+
 describe("SurveyCheckbox", () => {
   let node;
 
@@ -17,7 +19,7 @@ describe("SurveyCheckbox", () => {
 
   it("displays the Checkbox", () => {
     render(
-      <SurveyCheckbox onChange={() => console.log("boop")} />,
+      <SurveyCheckbox onChange={() => console.log("boop")} options={options} />,
       node,
       () => {
         expect(node.innerHTML).toContain("<input");
@@ -31,6 +33,7 @@ describe("SurveyCheckbox", () => {
       <SurveyCheckbox
         onChange={() => console.log("boop")}
         itemState={{ checked: true }}
+        options={options}
       />, //fake changeHandler to allow passing checked prop
       node,
       () => {

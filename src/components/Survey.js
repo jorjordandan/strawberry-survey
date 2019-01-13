@@ -1,5 +1,6 @@
 //@flow
 import * as React from "react";
+import { Spring, config } from "react-spring";
 import type {
   SurveyItemType,
   surveyItemState,
@@ -7,7 +8,7 @@ import type {
   Options
 } from "../lib/flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
-import surveyLib from "../lib/surveyLib";
+import getSurveyLib from "../lib/surveyLib";
 
 type Props = {
   items: SurveyItemType[]
@@ -16,6 +17,8 @@ type Props = {
 type State = {
   items: SurveyItemType[],
   currentItem: number,
+  currentItemHeight: number,
+  totalOffset: number,
   lib: surveyLibrary
 };
 
@@ -23,15 +26,17 @@ export default class Survey extends React.Component<Props, State> {
   state = {
     items: this.props.items,
     currentItem: 0,
-    lib: surveyLib()
+    lib: getSurveyLib(),
+    currentItemHeight: 4,
+    totalOffset: 0
   };
 
   // a runtime array of the 'surveyItem' elements, for animation, etc.
   subElements: HTMLDivElement[] = [];
 
   componentDidMount() {
-    // User provided survey objects have no 'surveyItemState' on them.
-    // 'surveyItemState' is passed to each item, and updates the state
+    // User provided survey objects have no 'surveyItemState' on them. (see index in demo for example)
+    // 'surveyItemState' is passed to each item, and updates the items state tree
     // in this component. Definitions for each component's state are stored
     // with the component itself, imported into 'surveyLib' and then
     // accessed here by type.
@@ -43,11 +48,12 @@ export default class Survey extends React.Component<Props, State> {
     });
     this.setState({ items: itemsWithState });
 
-    //Get the heights to drive the animations, getting the height of the
+    //Get the initial item height to drive the animations, getting the height of the
     //"SurveyItem" component.
-    this.subElements.forEach((item: HTMLDivElement, i: number) => {
-      console.log(i, item.getBoundingClientRect().height);
-    });
+    const currentItemHeight = this.subElements[
+      this.state.currentItem
+    ].getBoundingClientRect().height;
+    this.setState({ currentItemHeight });
   }
 
   //used to get the reference to each SurveyItem, to get height.
@@ -63,8 +69,18 @@ export default class Survey extends React.Component<Props, State> {
     handler(event, this, idx);
   };
 
+  //fires whenever an Item is complete
   completeItem() {
-    console.log("Item complete!");
+    //todo: validate question/enforce 'required'
+    //todo: pass an answer to the item
+    // animate to next question
+    const { totalOffset, currentItemHeight, currentItem } = this.state;
+    this.setState({ totalOffset: totalOffset + currentItemHeight });
+    const newItemHeight = this.subElements[currentItem].getBoundingClientRect()
+      .height;
+    this.setState({ currentItemHeight: newItemHeight });
+
+    //todo: skip logic
     this.setState({ currentItem: this.state.currentItem + 1 });
   }
 
@@ -89,29 +105,39 @@ export default class Survey extends React.Component<Props, State> {
 
   render() {
     return (
-      <React.Fragment>
-        <div style={{ height: "30vh" }} />
+      <Spring
+        from={{ transform: "translate(0px, 10px)" }}
+        to={{ transform: `translate(0px, ${-this.state.totalOffset}px)` }}
+        config={config.stiff}
+      >
+        {props => {
+          return (
+            <div style={props}>
+              <div style={{ height: "30vh" }} />
 
-        {this.state.items &&
-          this.state.items.map((item, idx) => {
-            return (
-              <SurveyItem
-                getRef={this.getRef}
-                item={item}
-                key={idx}
-                idx={idx}
-                active={this.state.currentItem === idx}
-                surveyComponent={this.buildSurveyComponent(
-                  this.handle.bind(this, item.type, idx),
-                  item.surveyItemState,
-                  item.options,
-                  item.type,
-                  idx
-                )}
-              />
-            );
-          })}
-      </React.Fragment>
+              {this.state.items &&
+                this.state.items.map((item, idx) => {
+                  return (
+                    <SurveyItem
+                      getRef={this.getRef}
+                      item={item}
+                      key={idx}
+                      idx={idx}
+                      active={this.state.currentItem === idx}
+                      surveyComponent={this.buildSurveyComponent(
+                        this.handle.bind(this, item.type, idx),
+                        item.surveyItemState,
+                        item.options,
+                        item.type,
+                        idx
+                      )}
+                    />
+                  );
+                })}
+            </div>
+          );
+        }}
+      </Spring>
     );
   }
 }

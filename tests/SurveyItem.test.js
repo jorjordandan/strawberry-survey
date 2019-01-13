@@ -43,7 +43,7 @@ describe("SurveyItem", () => {
 
   it("displays the question passed to surveyItem", () => {
     render(
-      <SurveyItem item={survey[0]} handleChange={() => console.log("boop")} />,
+      <SurveyItem item={survey[0]} handleChange={() => {}} getRef={() => {}} />,
       node,
       () => {
         expect(node.innerHTML).toContain("Are you a robot?*");
@@ -55,8 +55,13 @@ describe("SurveyItem", () => {
     render(
       <SurveyItem
         item={survey[0]}
+        getRef={() => {}}
         surveyComponent={
-          <SurveyCheckbox onChange={() => {}} itemState={{ checked: false }} />
+          <SurveyCheckbox
+            onChange={() => {}}
+            itemState={{ checked: false }}
+            options={{ label: "test label" }}
+          />
         }
       />,
       node,

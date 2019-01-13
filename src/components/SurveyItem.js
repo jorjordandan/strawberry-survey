@@ -64,7 +64,7 @@ class SurveyItem extends React.Component<Props, State> {
 const SurveyItemContainer: ReactComponentStyled<any> = styled.div`
   padding-bottom: 60px;
   .inactive {
-    opacity: 0.3;
+    opacity: 0.1;
   }
 `;
 

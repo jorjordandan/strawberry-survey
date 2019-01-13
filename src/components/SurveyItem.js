@@ -4,6 +4,7 @@ import * as React from "react";
 import SurveyQuestion from "./SurveyQuestion";
 import type { SurveyItemType } from "../lib/flowTypes.js";
 import styled, { type ReactComponentStyled } from "styled-components";
+import SurveyCursor from "./SurveyCursor.js";
 
 type Props = {
   item: SurveyItemType,
@@ -49,14 +50,17 @@ class SurveyItem extends React.Component<Props, State> {
       item: { question, required }
     } = this.props;
     return (
-      <SurveyItemContainer ref={i => (this.itemEl = i)}>
-        <SurveyQuestion
-          question={question}
-          required={required}
-          active={this.props.active}
-        />
-        {this.props.surveyComponent}
-      </SurveyItemContainer>
+      <React.Fragment>
+        <SurveyCursor active={this.props.active} />
+        <SurveyItemContainer ref={i => (this.itemEl = i)}>
+          <SurveyQuestion
+            question={question}
+            required={required}
+            active={this.props.active}
+          />
+          {this.props.surveyComponent}
+        </SurveyItemContainer>
+      </React.Fragment>
     );
   }
 }

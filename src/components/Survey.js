@@ -10,6 +10,7 @@ import type {
 import SurveyItem from "./SurveyItem.js";
 import getSurveyLib from "../lib/surveyLib";
 import NextButton from "./NextButton.js";
+import SimpleSnackbar from "./Snackbar.js";
 
 type Props = {
   items: SurveyItemType[]
@@ -20,7 +21,8 @@ type State = {
   currentItem: number,
   currentItemHeight: number,
   totalOffset: number,
-  lib: surveyLibrary
+  lib: surveyLibrary,
+  openReq: boolean
 };
 
 export default class Survey extends React.Component<Props, State> {
@@ -29,7 +31,8 @@ export default class Survey extends React.Component<Props, State> {
     currentItem: 0,
     lib: getSurveyLib(),
     currentItemHeight: 0,
-    totalOffset: 0
+    totalOffset: 0,
+    openReq: false
   };
 
   // a runtime array of the 'surveyItem' elements, for animation, etc.
@@ -93,8 +96,13 @@ export default class Survey extends React.Component<Props, State> {
       this.setState({ currentItem: this.state.currentItem + 1 });
     } else {
       // do this better with growl notifications or something.
+      this.setState({ openReq: true });
       console.log("this question is required!");
     }
+  }
+
+  handleCloseSnackbar() {
+    this.setState({ openReq: false });
   }
 
   // Like the item state and handler, we dynamically access the
@@ -153,6 +161,10 @@ export default class Survey extends React.Component<Props, State> {
           }}
         </Spring>
         <NextButton onClick={this.completeItem.bind(this)} />
+        <SimpleSnackbar
+          open={this.state.openReq}
+          handleClose={this.handleCloseSnackbar.bind(this)}
+        />
       </React.Fragment>
     );
   }

@@ -12,7 +12,6 @@ const styles = theme => ({
 });
 
 function NextButton(props) {
-  const { classes } = props;
   return (
     <div>
       <Button

@@ -12,6 +12,9 @@ type Props = {
   active: boolean
 };
 
+// NOTE: While this is not actually a stateful component, the state
+// is tracked in the Survey component. This is the
+// type that will be used there.
 type State = {
   checked: boolean
 };
@@ -42,9 +45,13 @@ const checkboxHandler = () => {
     ctx: React$ElementRef<typeof Survey>,
     idx: number
   ) => {
+    //return two copies of state...
     const { prevState, newState } = getStates(ctx);
-    const newAnswer = !prevState[idx].surveyItemState.checked;
+
     const state = newState[idx];
+
+    //pass in the new survetItemState, answer, and set completed to true
+    const newAnswer = !prevState[idx].surveyItemState.checked;
     state.surveyItemState = {
       checked: newAnswer
     };
@@ -52,7 +59,12 @@ const checkboxHandler = () => {
       checked: newAnswer
     };
     state.completed = true;
+    state.skipped = false;
+
+    //.. and replace the old state.
     ctx.setState({ items: newState });
+
+    //always call complete item at end of changeHandler to go to next item
     ctx.completeItem();
   };
 };

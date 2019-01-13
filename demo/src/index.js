@@ -20,7 +20,7 @@ const survey = [
     },
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
     completed: false,
-    skipped: false,
+    skipped: true,
     response: []
   },
   {
@@ -30,7 +30,7 @@ const survey = [
     options: {},
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
     completed: false,
-    skipped: false,
+    skipped: true,
     response: []
   }
 ];

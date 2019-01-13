@@ -9,6 +9,7 @@ import type {
 } from "../lib/flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
 import getSurveyLib from "../lib/surveyLib";
+import NextButton from "./NextButton.js";
 
 type Props = {
   items: SurveyItemType[]
@@ -27,7 +28,7 @@ export default class Survey extends React.Component<Props, State> {
     items: this.props.items,
     currentItem: 0,
     lib: getSurveyLib(),
-    currentItemHeight: 4,
+    currentItemHeight: 0,
     totalOffset: 0
   };
 
@@ -72,16 +73,28 @@ export default class Survey extends React.Component<Props, State> {
   //fires whenever an Item is complete
   completeItem() {
     //todo: validate question/enforce 'required'
-    //todo: pass an answer to the item
-    // animate to next question
-    const { totalOffset, currentItemHeight, currentItem } = this.state;
-    this.setState({ totalOffset: totalOffset + currentItemHeight });
-    const newItemHeight = this.subElements[currentItem].getBoundingClientRect()
-      .height;
-    this.setState({ currentItemHeight: newItemHeight });
+    if (
+      this.state.items[this.state.currentItem].required === true &&
+      this.state.items[this.state.currentItem].completed === true
+    ) {
+      // animate to next question
+      const { totalOffset, currentItemHeight, currentItem } = this.state;
+      this.setState({ totalOffset: totalOffset + currentItemHeight });
+      if (typeof this.subElements[currentItem + 1] !== "undefined") {
+        const newItemHeight = this.subElements[
+          currentItem + 1
+        ].getBoundingClientRect().height;
+        this.setState({ currentItemHeight: newItemHeight });
+      } else {
+        console.warn("ya done");
+      }
 
-    //todo: skip logic
-    this.setState({ currentItem: this.state.currentItem + 1 });
+      //todo: skip logic
+      this.setState({ currentItem: this.state.currentItem + 1 });
+    } else {
+      // do this better with growl notifications or something.
+      console.log("this question is required!");
+    }
   }
 
   // Like the item state and handler, we dynamically access the
@@ -105,39 +118,42 @@ export default class Survey extends React.Component<Props, State> {
 
   render() {
     return (
-      <Spring
-        from={{ transform: "translate(0px, 10px)" }}
-        to={{ transform: `translate(0px, ${-this.state.totalOffset}px)` }}
-        config={config.stiff}
-      >
-        {props => {
-          return (
-            <div style={props}>
-              <div style={{ height: "30vh" }} />
+      <React.Fragment>
+        <Spring
+          from={{ transform: "translate(0px, 10px)" }}
+          to={{ transform: `translate(0px, ${-this.state.totalOffset}px)` }}
+          config={config.stiff}
+        >
+          {props => {
+            return (
+              <div style={props}>
+                <div style={{ height: "30vh" }} />
 
-              {this.state.items &&
-                this.state.items.map((item, idx) => {
-                  return (
-                    <SurveyItem
-                      getRef={this.getRef}
-                      item={item}
-                      key={idx}
-                      idx={idx}
-                      active={this.state.currentItem === idx}
-                      surveyComponent={this.buildSurveyComponent(
-                        this.handle.bind(this, item.type, idx),
-                        item.surveyItemState,
-                        item.options,
-                        item.type,
-                        idx
-                      )}
-                    />
-                  );
-                })}
-            </div>
-          );
-        }}
-      </Spring>
+                {this.state.items &&
+                  this.state.items.map((item, idx) => {
+                    return (
+                      <SurveyItem
+                        getRef={this.getRef}
+                        item={item}
+                        key={idx}
+                        idx={idx}
+                        active={this.state.currentItem === idx}
+                        surveyComponent={this.buildSurveyComponent(
+                          this.handle.bind(this, item.type, idx),
+                          item.surveyItemState,
+                          item.options,
+                          item.type,
+                          idx
+                        )}
+                      />
+                    );
+                  })}
+              </div>
+            );
+          }}
+        </Spring>
+        <NextButton onClick={this.completeItem.bind(this)} />
+      </React.Fragment>
     );
   }
 }

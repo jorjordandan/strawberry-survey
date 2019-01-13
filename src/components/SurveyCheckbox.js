@@ -43,9 +43,15 @@ const checkboxHandler = () => {
     idx: number
   ) => {
     const { prevState, newState } = getStates(ctx);
-    newState[idx].surveyItemState = {
-      checked: !prevState[idx].surveyItemState.checked
+    const newAnswer = !prevState[idx].surveyItemState.checked;
+    const state = newState[idx];
+    state.surveyItemState = {
+      checked: newAnswer
     };
+    state.answer = {
+      checked: newAnswer
+    };
+    state.completed = true;
     ctx.setState({ items: newState });
     ctx.completeItem();
   };

@@ -47,8 +47,8 @@ export default class Survey extends React.Component<Props, State> {
 
   componentDidMount() {
     // User provided survey objects need some extra properties added to them.
-    // (see index in demo for example) surveyItemState', completed, and skipped
-    // ' are passed to each item, and updates the items state tree
+    // (see index in demo for example) surveyItemState, completed, and skipped
+    // are passed to each item, and update the item's state tree
     // in this component. Definitions for each component's state are stored
     // with the component itself, imported into 'surveyLib' and then
     // accessed here by type.
@@ -58,8 +58,7 @@ export default class Survey extends React.Component<Props, State> {
       items: addPropertiesToItems(items, library)
     });
 
-    //Get the initial item height to drive the animations, getting the height of the
-    //"SurveyItem" component.
+    //Get the initial item height to drive the animations
     const currentItemHeight = this.subElements[
       this.state.currentItem
     ].getBoundingClientRect().height;
@@ -68,7 +67,7 @@ export default class Survey extends React.Component<Props, State> {
     });
   }
 
-  //used to get the reference to each SurveyItem, to get height.
+  //used to get the reference to each SurveyItem element, to get height.
   getRef = (ref: any, i: number) => {
     this.subElements[i] = ref;
   };
@@ -110,14 +109,12 @@ export default class Survey extends React.Component<Props, State> {
       return true;
     }
 
-    if (isNextElem && required && completed) {
-      // animate to next question
-      const newItemHeight = nextElem.getBoundingClientRect().height;
-      this.setState({ totalOffset: totalOffset + currentItemHeight });
-      this.setState({ currentItemHeight: newItemHeight });
-      //todo: skip logic
-      this.setState({ currentItem: currentItem + 1 });
-    }
+    // animate to next question
+    const newItemHeight = nextElem.getBoundingClientRect().height;
+    this.setState({ totalOffset: totalOffset + currentItemHeight });
+    this.setState({ currentItemHeight: newItemHeight });
+    //todo: skip logic
+    this.setState({ currentItem: currentItem + 1 });
   }
 
   handleCloseSnackbar() {

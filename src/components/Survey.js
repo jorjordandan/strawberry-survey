@@ -11,6 +11,7 @@ import SurveyItem from "./SurveyItem.js";
 import getSurveyLib from "../lib/surveyLib";
 import NextButton from "./NextButton.js";
 import SimpleSnackbar from "./Snackbar.js";
+import { addPropertiesToItems } from "../lib/utilities.js";
 
 type Props = {
   items: SurveyItemType[]
@@ -22,7 +23,10 @@ type State = {
   currentItemHeight: number,
   totalOffset: number,
   lib: surveyLibrary,
-  openReq: boolean
+  userMessage: {
+    type: String,
+    content: String
+  }
 };
 
 export default class Survey extends React.Component<Props, State> {
@@ -32,7 +36,10 @@ export default class Survey extends React.Component<Props, State> {
     lib: getSurveyLib(),
     currentItemHeight: 0,
     totalOffset: 0,
-    openReq: false
+    userMessage: {
+      type: "none",
+      content: ""
+    }
   };
 
   // a runtime array of the 'surveyItem' elements, for animation, etc.
@@ -45,12 +52,8 @@ export default class Survey extends React.Component<Props, State> {
     // with the component itself, imported into 'surveyLib' and then
     // accessed here by type.
     const { items } = this.props;
-    const itemsWithState = items.map(item => {
-      let type = item.type;
-      item.surveyItemState = this.state.lib[type].state();
-      return item;
-    });
-    this.setState({ items: itemsWithState });
+    const library = this.state.lib;
+    this.setState({ items: addPropertiesToItems(items, library) });
 
     //Get the initial item height to drive the animations, getting the height of the
     //"SurveyItem" component.
@@ -75,7 +78,6 @@ export default class Survey extends React.Component<Props, State> {
 
   //fires whenever an Item is complete
   completeItem() {
-    //todo: validate question/enforce 'required'
     if (
       this.state.items[this.state.currentItem].required === true &&
       this.state.items[this.state.currentItem].completed === true
@@ -89,20 +91,27 @@ export default class Survey extends React.Component<Props, State> {
         ].getBoundingClientRect().height;
         this.setState({ currentItemHeight: newItemHeight });
       } else {
+        //no more items...
         console.warn("ya done");
       }
 
       //todo: skip logic
+
       this.setState({ currentItem: this.state.currentItem + 1 });
     } else {
       // do this better with growl notifications or something.
-      this.setState({ openReq: true });
+      const userMessage = {
+        type: "Error",
+        content: "This answer is required."
+      };
+      this.setState({ userMessage });
       console.log("this question is required!");
     }
   }
 
   handleCloseSnackbar() {
-    this.setState({ openReq: false });
+    const userMessage = { type: "none", content: "" };
+    this.setState({ userMessage });
   }
 
   // Like the item state and handler, we dynamically access the
@@ -162,7 +171,7 @@ export default class Survey extends React.Component<Props, State> {
         </Spring>
         <NextButton onClick={this.completeItem.bind(this)} />
         <SimpleSnackbar
-          open={this.state.openReq}
+          userMessage={this.state.userMessage}
           handleClose={this.handleCloseSnackbar.bind(this)}
         />
       </React.Fragment>

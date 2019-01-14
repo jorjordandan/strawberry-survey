@@ -12,3 +12,14 @@ export function getStates(ctx: React$ElementRef<typeof Survey>): States {
   states.newState = ctx.state.items.slice();
   return states;
 }
+
+export function addPropertiesToItems(items, library) {
+  const itemsWithProperties = items.map(item => {
+    let type = item.type;
+    item.complete = false;
+    item.skipped = true;
+    item.surveyItemState = library[type].state();
+    return item;
+  });
+  return itemsWithProperties;
+}

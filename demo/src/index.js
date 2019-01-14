@@ -19,8 +19,6 @@ const survey = [
       label: "I'm a robot"
     },
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
-    completed: false,
-    skipped: true,
     response: []
   },
   {
@@ -29,8 +27,6 @@ const survey = [
     required: true,
     options: {},
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
-    completed: false,
-    skipped: true,
     response: []
   }
 ];

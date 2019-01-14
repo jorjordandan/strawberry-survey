@@ -1,25 +1,26 @@
+// @flow
 import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
 type Props = {
-  open: boolean
+  userMessage: {
+    type: String,
+    content: String
+  },
+  handleClose: () => mixed
 };
 
-function SimpleSnackbar(props: Props) {
-  function handleClick() {
-    // setOpen(true);
+function checkOpen(message) {
+  if (message.type === "none") {
+    return false;
+  } else {
+    return true;
   }
+}
 
-  // function handleClose(event, reason) {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   // setOpen(false);
-  // }
-
+function SimpleSnackbar(props: Props) {
   return (
     <div>
       <Snackbar
@@ -27,13 +28,13 @@ function SimpleSnackbar(props: Props) {
           vertical: "bottom",
           horizontal: "right"
         }}
-        open={props.open}
+        open={checkOpen(props.userMessage)}
         autoHideDuration={3000}
         onClose={props.handleClose}
         ContentProps={{
           "aria-describedby": "message-id"
         }}
-        message={<span id="message-id">Question Required</span>}
+        message={<span id="message-id">{props.userMessage.content}</span>}
         action={[
           <IconButton
             key="close"

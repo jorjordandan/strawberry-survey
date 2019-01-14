@@ -46,21 +46,26 @@ export default class Survey extends React.Component<Props, State> {
   subElements: HTMLDivElement[] = [];
 
   componentDidMount() {
-    // User provided survey objects have no 'surveyItemState' on them. (see index in demo for example)
-    // 'surveyItemState' is passed to each item, and updates the items state tree
+    // User provided survey objects need some extra properties added to them.
+    // (see index in demo for example) surveyItemState', completed, and skipped
+    // ' are passed to each item, and updates the items state tree
     // in this component. Definitions for each component's state are stored
     // with the component itself, imported into 'surveyLib' and then
     // accessed here by type.
     const { items } = this.props;
     const library = this.state.lib;
-    this.setState({ items: addPropertiesToItems(items, library) });
+    this.setState({
+      items: addPropertiesToItems(items, library)
+    });
 
     //Get the initial item height to drive the animations, getting the height of the
     //"SurveyItem" component.
     const currentItemHeight = this.subElements[
       this.state.currentItem
     ].getBoundingClientRect().height;
-    this.setState({ currentItemHeight });
+    this.setState({
+      currentItemHeight
+    });
   }
 
   //used to get the reference to each SurveyItem, to get height.
@@ -78,34 +83,40 @@ export default class Survey extends React.Component<Props, State> {
 
   //fires whenever an Item is complete
   completeItem() {
-    if (
-      this.state.items[this.state.currentItem].required === true &&
-      this.state.items[this.state.currentItem].completed === true
-    ) {
-      // animate to next question
-      const { totalOffset, currentItemHeight, currentItem } = this.state;
-      this.setState({ totalOffset: totalOffset + currentItemHeight });
-      if (typeof this.subElements[currentItem + 1] !== "undefined") {
-        const newItemHeight = this.subElements[
-          currentItem + 1
-        ].getBoundingClientRect().height;
-        this.setState({ currentItemHeight: newItemHeight });
-      } else {
-        //no more items...
-        console.warn("ya done");
-      }
+    const thisItem = this.state.items[this.state.currentItem];
+    //note: completed here means survey item completed, not the whole thing.
+    const { required, completed } = thisItem;
+    const { totalOffset, currentItemHeight, currentItem } = this.state;
+    const nextElem = this.subElements[currentItem + 1];
+    const isNextElem = typeof nextElem !== "undefined";
 
-      //todo: skip logic
+    if (!thisItem) {
+      console.log("no more items!");
+      return true;
+    }
 
-      this.setState({ currentItem: this.state.currentItem + 1 });
-    } else {
-      // do this better with growl notifications or something.
+    if (required && !completed) {
       const userMessage = {
         type: "Error",
         content: "This answer is required."
       };
       this.setState({ userMessage });
       console.log("this question is required!");
+      return true;
+    }
+
+    if (!isNextElem) {
+      console.log("Survey is done!");
+      return true;
+    }
+
+    if (isNextElem && required && completed) {
+      // animate to next question
+      const newItemHeight = nextElem.getBoundingClientRect().height;
+      this.setState({ totalOffset: totalOffset + currentItemHeight });
+      this.setState({ currentItemHeight: newItemHeight });
+      //todo: skip logic
+      this.setState({ currentItem: currentItem + 1 });
     }
   }
 

@@ -45,13 +45,20 @@ class SurveyItem extends React.Component<Props, State> {
     this.props.getRef(this.itemEl, this.props.idx);
   }
 
+  onRest() {
+    console.log("boop");
+  }
+
   render() {
     const {
       item: { question, required }
     } = this.props;
     return (
       <React.Fragment>
-        <SurveyCursor active={this.props.active} />
+        <SurveyCursor
+          active={this.props.active}
+          onRest={this.onRest.bind(this)}
+        />
         <SurveyItemContainer ref={i => (this.itemEl = i)}>
           <SurveyQuestion
             question={question}

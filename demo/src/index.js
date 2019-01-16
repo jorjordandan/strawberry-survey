@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import Survey from "../../src/components/Survey.js";
+import SurveyContainer from "../../src/components/SurveyContainer.js";
 import { createGlobalStyle } from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
@@ -43,9 +44,13 @@ class Demo extends Component {
         <Typography variant="h2" gutterBottom>
           Strawberry-Survey Demo
         </Typography>
-        <div style={containerStyle}>
+        {/* <div style={containerStyle}>
           <Survey items={survey} options={SurveyOptions} />
-        </div>
+        </div> */}
+        <SurveyContainer items={survey} options={SurveyOptions}>
+          {" "}
+        </SurveyContainer>
+        <div className="containerStyle" />
       </div>
     );
   }

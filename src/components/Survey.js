@@ -54,10 +54,8 @@ export default class Survey extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps) {
     const currentItem = this.props.currentItem;
-
     const nextElem = this.subElements[currentItem];
     const isNextElem = typeof nextElem !== "undefined";
-
     const { totalOffset, currentItemHeight } = this.state;
 
     if (!isNextElem) {
@@ -77,6 +75,21 @@ export default class Survey extends React.Component<Props, State> {
     this.setState({ userMessage });
   }
 
+  getNextButton() {
+    if (!this.props.items[this.props.currentItem]) {
+      return false;
+    }
+    if (!this.props.items[this.props.currentItem].required) {
+      return (
+        <NextButton
+          onClick={() => this.props.completeItem(this.props.currentItem)}
+        />
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -89,7 +102,6 @@ export default class Survey extends React.Component<Props, State> {
             return (
               <div style={props}>
                 <div style={{ height: "30vh" }} />
-
                 {this.props.items &&
                   this.props.items.map((item, idx) => {
                     return (
@@ -113,9 +125,8 @@ export default class Survey extends React.Component<Props, State> {
             );
           }}
         </Spring>
-        <NextButton
-          onClick={() => this.props.completeItem(this.props.currentItem)}
-        />
+        {this.getNextButton()}
+
         <SimpleSnackbar
           userMessage={this.state.userMessage}
           handleClose={this.handleCloseSnackbar.bind(this)}

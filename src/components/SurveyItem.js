@@ -10,6 +10,7 @@ type Props = {
   item: SurveyItemType,
   surveyComponent: React$Element<any>,
   active: boolean,
+  completed: boolean,
   idx: number,
   getRef: (ref: any, i: number) => mixed
 };
@@ -59,6 +60,7 @@ class SurveyItem extends React.Component<Props, State> {
         <SurveyCursor
           active={this.props.active}
           onRest={this.onRest.bind(this)}
+          completed={this.props.item.completed}
         />
         <SurveyItemContainer ref={i => (this.itemEl = i)}>
           <SurveyQuestion

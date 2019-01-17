@@ -60,7 +60,6 @@ const checkboxHandler = () => {
     };
     state.completed = true;
     state.skipped = false;
-
     //.. and replace the old state.
     ctx.setState({ items: newState });
 

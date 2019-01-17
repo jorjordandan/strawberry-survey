@@ -72,12 +72,14 @@ export default class SurveyContainer extends React.Component<Props, State> {
     return React.createElement(this.state.lib[type].component, props, null);
   }
 
-  completeItem(idx) {
+  async completeItem(idx) {
     console.log(`Processing item ${idx}`);
     if (this.state.items[idx].required && !this.state.items[idx].completed) {
       console.log("this question is required!");
       return true;
     }
+
+    await wait(800);
     this.setState({ currentItem: this.state.currentItem + 1 });
   }
   render() {
@@ -93,3 +95,6 @@ export default class SurveyContainer extends React.Component<Props, State> {
     );
   }
 }
+
+const wait = (amount = 0) =>
+  new Promise(resolve => setTimeout(resolve, amount));

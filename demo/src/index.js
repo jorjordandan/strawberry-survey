@@ -25,7 +25,7 @@ const survey = [
   {
     question: "Do you like being a robot?",
     type: "checkbox",
-    required: true,
+    required: false,
     options: {},
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
     response: []

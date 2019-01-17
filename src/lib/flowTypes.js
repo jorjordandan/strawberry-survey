@@ -12,6 +12,7 @@ export type surveyItemState = {
 
 export type SurveyItemType = {
   question: string,
+  details?: string,
   type: string,
   required: boolean,
   options: Options,

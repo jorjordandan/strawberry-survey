@@ -119,6 +119,7 @@ export default class Survey extends React.Component<Props, State> {
                         key={idx}
                         idx={idx}
                         active={this.props.currentItem === idx}
+                        itemHeight={this.state.currentItemHeight}
                         surveyComponent={this.props.buildComponent(
                           this.props.buildHandler.bind(this, item.type, idx),
                           item.surveyItemState,

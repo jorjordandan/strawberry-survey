@@ -21,10 +21,17 @@ const Container = Keyframes.Spring({
   wiggle: async (next, cancel, ownProps) => {
     await next({
       backgroundColor: "#0d9",
-      config: { tension: 50, friction: 10, velocity: 10, clamp: true }
+      transform: "rotate(-2deg)",
+      config: {
+        tension: 50,
+        friction: 10,
+        velocity: 10,
+        clamp: true
+      }
     });
     await next({
       backgroundColor: "#afa",
+      transform: "rotate(2deg)",
       config: {
         tension: 50,
         friction: 10,
@@ -34,6 +41,7 @@ const Container = Keyframes.Spring({
     });
     await next({
       backgroundColor: "#9d9",
+      transform: "rotate(-2deg)",
       width: "2px",
       config: config.wobbly
     });
@@ -50,6 +58,21 @@ export default function SurveyCursor(props: Props) {
     }
   };
 
+  const getItemHeight = () => {
+    if (props.active) {
+      return props.itemHeight - 60;
+    } else return true;
+  };
+
+  const SurveyCursorStyle: ReactComponentStyled<any> = styled.div`
+    width: 10px;
+    height: ${getItemHeight()}px;
+    float: left;
+    margin-right: 20px;
+    background-color: #ccc;
+    border-radius: 5px;
+  `;
+
   return (
     <Container
       state={getAnimation()}
@@ -62,12 +85,3 @@ export default function SurveyCursor(props: Props) {
     </Container>
   );
 }
-
-const SurveyCursorStyle: ReactComponentStyled<any> = styled.div`
-  width: 10px;
-  height: 90px;
-  float: left;
-  margin-right: 20px;
-  background-color: #ccc;
-  border-radius: 5px;
-`;

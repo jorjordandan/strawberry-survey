@@ -19,6 +19,7 @@ export type SurveyItemType = {
   completed: false,
   skipped: false,
   response: string[],
+  status: string,
   surveyItemState: surveyItemState
 };
 

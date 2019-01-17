@@ -46,7 +46,8 @@ class SurveyItem extends React.Component<Props, State> {
   }
 
   onRest() {
-    console.log("boop");
+    //do something...
+    // console.log("boop");
   }
 
   render() {

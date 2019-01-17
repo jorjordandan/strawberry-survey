@@ -47,9 +47,8 @@ class Demo extends Component {
         {/* <div style={containerStyle}>
           <Survey items={survey} options={SurveyOptions} />
         </div> */}
-        <SurveyContainer items={survey} options={SurveyOptions}>
-          {" "}
-        </SurveyContainer>
+        <SurveyContainer items={survey} options={SurveyOptions} />
+
         <div className="containerStyle" />
       </div>
     );

@@ -64,8 +64,7 @@ const checkboxHandler = () => {
     //.. and replace the old state.
     ctx.setState({ items: newState });
 
-    //always call complete item at end of changeHandler to go to next item
-    ctx.completeItem();
+    ctx.completeItem(idx);
   };
 };
 

@@ -7,7 +7,7 @@ import type {
   Options
 } from "../lib/flowTypes.js";
 import getSurveyLib from "../lib/surveyLib";
-import SurveyTwo from "./SurveyTwo.js";
+import Survey from "./Survey.js";
 
 import { addPropertiesToItems } from "../lib/utilities.js";
 
@@ -17,20 +17,20 @@ type Props = {
 
 type State = {
   items: SurveyItemType[],
-  lib: surveyLibrary
+  lib: surveyLibrary,
+  currentItem: number
 };
 
 export default class SurveyContainer extends React.Component<Props, State> {
   state = {
     items: this.props.items,
-    lib: getSurveyLib()
+    lib: getSurveyLib(),
+    currentItem: 0
   };
 
   componentDidMount() {
     // User provided survey objects need some extra properties added to them.
-    // (see index in demo for example) surveyItemState, completed, and skipped
-    // are passed to each item, and update the item's state tree
-    // in this component. Definitions for each component's state are stored
+    //Definitions for each component's state are stored
     // with the component itself, imported into 'surveyLib' and then
     // accessed here by type.
     const { items } = this.props;
@@ -42,7 +42,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
 
   // Each survey item type needs a different handler function.
   // Like the state, the handler function is defined with the component,
-  // and then imported into 'surveyLib', and then accessed here based on the type.
+  // and then imported into surveyLib, and then accessed here based on the type.
   buildHandler = (
     type: string,
     idx: number,
@@ -52,7 +52,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
     newHandler(event, this, idx);
   };
 
-  // Like the item state and handler, we dynamically access the
+  // Like the item state and handler, we access the
   // actual component based on the user provided object, and pass
   // in all the required props.
   buildSurveyComponent(
@@ -72,13 +72,23 @@ export default class SurveyContainer extends React.Component<Props, State> {
     return React.createElement(this.state.lib[type].component, props, null);
   }
 
+  completeItem(idx) {
+    console.log(`Processing item ${idx}`);
+    if (this.state.items[idx].required && !this.state.items[idx].completed) {
+      console.log("this question is required!");
+      return true;
+    }
+    this.setState({ currentItem: this.state.currentItem + 1 });
+  }
   render() {
     return (
-      <SurveyTwo
+      <Survey
         items={this.state.items}
         surveyLibrary={this.state.lib}
         buildComponent={this.buildSurveyComponent.bind(this)}
         buildHandler={this.buildHandler}
+        currentItem={this.state.currentItem}
+        completeItem={this.completeItem.bind(this)}
       />
     );
   }

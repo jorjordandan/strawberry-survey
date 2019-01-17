@@ -34,11 +34,11 @@ export default class Survey extends React.Component<Props, State> {
     }
   };
 
-  // a runtime array of the 'surveyItem' elements, for animation, etc.
+  // an array of the 'surveyItem' elements, for animation, etc.
   subElements: HTMLDivElement[] = [];
 
   componentDidMount() {
-    //Get the initial item height to drive the animations
+    //Get the initial item height for the animations
     const currentItemHeight = this.subElements[
       this.props.currentItem
     ].getBoundingClientRect().height;
@@ -59,6 +59,7 @@ export default class Survey extends React.Component<Props, State> {
     const { totalOffset, currentItemHeight } = this.state;
 
     if (!isNextElem) {
+      //do something.
       console.log("Survey is done!");
       return true;
     }
@@ -75,19 +76,26 @@ export default class Survey extends React.Component<Props, State> {
     this.setState({ userMessage });
   }
 
+  //don't get next button if item is required.
   getNextButton() {
-    if (!this.props.items[this.props.currentItem]) {
+    const idx = this.props.currentItem;
+    const currentItem = this.props.items[idx];
+
+    if (!currentItem) {
       return false;
     }
-    if (!this.props.items[this.props.currentItem].required) {
-      return (
-        <NextButton
-          onClick={() => this.props.completeItem(this.props.currentItem)}
-        />
-      );
+    if (!currentItem.required) {
+      return <NextButton onClick={() => this.props.completeItem(idx)} />;
     } else {
       return null;
     }
+  }
+
+  //
+  formTest(e) {
+    e.preventDefault();
+    console.log(e.target);
+    console.log(this);
   }
 
   render() {

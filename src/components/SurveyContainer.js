@@ -63,7 +63,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
     active: boolean
   ) {
     const props = {
-      onChange: handler,
+      onHandle: handler,
       itemState: state,
       options: options,
       active: active

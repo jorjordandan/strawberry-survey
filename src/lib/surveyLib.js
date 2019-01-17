@@ -6,6 +6,11 @@ import SurveyCheckbox, {
   checkboxState
 } from "../components/SurveyCheckbox";
 
+import SurveyTextInput, {
+  textInputHandler,
+  textInputState
+} from "../components/SurveyTextInput";
+
 // this function imports the survey components, their handlers,
 // their state, and the components themselves, and assembles them
 // into a library. This allows the Survey component to build the
@@ -19,6 +24,12 @@ export default function getSurveyLib(): surveyLibrary {
     component: SurveyCheckbox,
     handler: checkboxHandler,
     state: checkboxState
+  };
+
+  surveyLib.textInput = {
+    component: SurveyTextInput,
+    handler: textInputHandler,
+    state: textInputState
   };
 
   return surveyLib;

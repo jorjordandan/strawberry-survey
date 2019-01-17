@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
-import Survey from "../../src/components/Survey.js";
 import SurveyContainer from "../../src/components/SurveyContainer.js";
 import { createGlobalStyle } from "styled-components";
 import Typography from "@material-ui/core/Typography";
@@ -13,14 +12,24 @@ body {
 
 const survey = [
   {
+    question: "What's your robo name?",
+    type: "textInput",
+    required: true,
+    options: {
+      label: "name"
+    },
+    skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
+    responses: []
+  },
+  {
     question: "Are you a robot?",
     type: "checkbox",
     required: true,
     options: {
       label: "I'm a robot"
     },
-    skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
-    response: []
+    skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
+    responses: []
   },
   {
     question: "Do you like being a robot?",
@@ -28,7 +37,7 @@ const survey = [
     required: false,
     options: {},
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
-    response: []
+    responses: []
   }
 ];
 
@@ -54,10 +63,5 @@ class Demo extends Component {
     );
   }
 }
-
-const containerStyle = {
-  width: "100%",
-  height: "100%"
-};
 
 render(<Demo />, document.querySelector("#demo"));

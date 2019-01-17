@@ -6,7 +6,7 @@ import { getStates } from "../lib/utilities.js";
 import Survey from "../components/Survey.js";
 
 type Props = {
-  onChange: (event: SyntheticEvent<>) => mixed,
+  onHandle: (event: SyntheticEvent<>) => mixed,
   itemState: surveyItemState,
   options: Options,
   active: boolean
@@ -25,7 +25,7 @@ const SurveyCheckbox = (props: Props) => {
       control={
         <Checkbox
           checked={props.itemState.checked}
-          onChange={props.onChange}
+          onChange={props.onHandle}
           disabled={!props.active}
         />
       }

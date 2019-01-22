@@ -3,7 +3,8 @@ import type { checkboxProps } from "../components/SurveyCheckbox";
 
 export type Options = {
   forwardOnly?: boolean,
-  label?: string
+  label?: string,
+  helperText?: string
 };
 
 export type surveyItemState = {
@@ -15,13 +16,17 @@ export type SurveyItemType = {
   details?: string,
   type: string,
   required: boolean,
-  options: Options,
-  skip: any,
-  completed: false,
-  skipped: false,
+  options?: Options,
+  skip?: any,
+  completed: boolean,
+  skipped: boolean,
   response: string[],
-  status: string,
-  surveyItemState: surveyItemState
+  status?: string,
+  surveyItemState: surveyItemState,
+  answer?: {
+    checked?: boolean,
+    value?: string
+  }
 };
 
 export type surveyLibrary = {

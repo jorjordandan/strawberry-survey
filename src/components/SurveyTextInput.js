@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
 import type { surveyItemState, Options } from "../lib/flowTypes.js";
 import { getStates } from "../lib/utilities.js";
-import Survey from "../components/Survey.js";
+import SurveyContainer from "../components/SurveyContainer.js";
 
 type Props = {
   onHandle: (event: SyntheticEvent<>) => mixed,
@@ -19,13 +19,19 @@ type State = {
   value: string
 };
 
-class SurveyTextInput extends Component<Props> {
+class SurveyTextInput extends Component<Props, State> {
   state = {
     value: ""
   };
 
-  onChange(e) {
-    this.setState({ value: e.target.value });
+  static defaultProps = {
+    itemState: { value: "" }
+  };
+
+  onChange(event: SyntheticEvent<HTMLInputElement>) {
+    // eslint-disable-next-line no-unused-expressions
+    (event.currentTarget: HTMLInputElement);
+    this.setState({ value: event.currentTarget.value });
   }
 
   render() {
@@ -43,29 +49,23 @@ class SurveyTextInput extends Component<Props> {
   }
 }
 
-SurveyTextInput.defaultProps = {
-  itemState: { value: "" }
-};
-
 const textInputHandler = () => {
   return (
-    event: SyntheticEvent<>,
-    ctx: React$ElementRef<typeof Survey>,
+    event: SyntheticEvent<HTMLElement>,
+    ctx: React$ElementRef<typeof SurveyContainer>,
     idx: number
   ) => {
     event.preventDefault();
-    const inputVal = event.target.getElementsByTagName("input")[0].value;
+    // eslint-disable-next-line no-unused-expressions
+    (event.currentTarget: HTMLElement);
+    const inputVal = event.currentTarget.getElementsByTagName("input")[0].value;
     //return two copies of state...
-    const { prevState, newState } = getStates(ctx);
+    const { newState } = getStates(ctx);
     const state = newState[idx];
 
     //pass in the new survetItemState, answer, and set completed to true
-    state.surveyItemState = {
-      value: inputVal
-    };
-    state.answer = {
-      value: inputVal
-    };
+    state.surveyItemState = { value: inputVal };
+    state.answer = { value: inputVal };
     state.completed = true;
     state.skipped = false;
     //.. and replace the old state.

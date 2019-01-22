@@ -1,7 +1,11 @@
 //@flow
 
 import * as React from "react";
-import type { SurveyItemType } from "../lib/flowTypes.js";
+import type {
+  SurveyItemType,
+  surveyItemState,
+  Options
+} from "../lib/flowTypes.js";
 import styled, { type ReactComponentStyled } from "styled-components";
 import SurveyQuestion from "./SurveyQuestion";
 import SurveyDetails from "./SurveyDetails";
@@ -9,9 +13,15 @@ import SurveyCursor from "./SurveyCursor";
 
 type Props = {
   item: SurveyItemType,
-  surveyComponent: React$Element<any>,
+  surveyComponent: (
+    handler: () => mixed,
+    state: surveyItemState,
+    options: Options | typeof undefined,
+    type: string,
+    active: boolean
+  ) => mixed,
   active: boolean,
-  completed: boolean,
+  completed?: boolean,
   idx: number,
   itemHeight: number,
   getRef: (ref: any, i: number) => mixed
@@ -25,13 +35,6 @@ type State = {
   }
 };
 
-const defaults = {
-  required: false,
-  completed: false,
-  skipped: false,
-  response: []
-};
-
 class SurveyItem extends React.Component<Props, State> {
   state = {
     answer: [],
@@ -39,10 +42,6 @@ class SurveyItem extends React.Component<Props, State> {
   };
 
   itemEl: ?HTMLDivElement;
-
-  static defaultProps = {
-    item: { ...defaults }
-  };
 
   componentDidMount() {
     this.props.getRef(this.itemEl, this.props.idx);
@@ -53,9 +52,22 @@ class SurveyItem extends React.Component<Props, State> {
     // console.log("boop");
   }
 
+  getDetailsIfExist() {
+    if (this.props.item.details) {
+      return (
+        <SurveyDetails
+          details={this.props.item.details}
+          active={this.props.active}
+        />
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const {
-      item: { question, required, details }
+      item: { question, required }
     } = this.props;
     return (
       <React.Fragment>
@@ -71,7 +83,7 @@ class SurveyItem extends React.Component<Props, State> {
             required={required}
             active={this.props.active}
           />
-          <SurveyDetails details={details} active={this.props.active} />
+          {this.getDetailsIfExist()}
           {this.props.surveyComponent}
         </SurveyItemContainer>
       </React.Fragment>

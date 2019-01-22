@@ -6,8 +6,8 @@ import CloseIcon from "@material-ui/icons/Close";
 
 type Props = {
   userMessage: {
-    type: String,
-    content: String
+    type: string,
+    content: string
   },
   handleClose: () => mixed
 };

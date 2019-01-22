@@ -22,11 +22,7 @@ type State = {
 };
 
 export default class SurveyContainer extends React.Component<Props, State> {
-  state = {
-    items: this.props.items,
-    lib: getSurveyLib(),
-    currentItem: 0
-  };
+  state = { items: this.props.items, lib: getSurveyLib(), currentItem: 0 };
 
   componentDidMount() {
     // User provided survey objects need some extra properties added to them.
@@ -61,7 +57,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
     options: Options,
     type: string,
     active: boolean
-  ) {
+  ): React$Element<any> {
     const props = {
       onHandle: handler,
       itemState: state,
@@ -72,7 +68,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
     return React.createElement(this.state.lib[type].component, props, null);
   }
 
-  async completeItem(idx) {
+  async completeItem(idx: number) {
     console.log(`Processing item ${idx}`);
     if (this.state.items[idx].required && !this.state.items[idx].completed) {
       console.log("this question is required!");
@@ -80,7 +76,9 @@ export default class SurveyContainer extends React.Component<Props, State> {
     }
 
     await wait(800);
-    this.setState({ currentItem: this.state.currentItem + 1 });
+    this.setState({
+      currentItem: this.state.currentItem + 1
+    });
   }
   render() {
     return (

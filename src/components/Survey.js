@@ -1,17 +1,28 @@
 //@flow
 import * as React from "react";
 import { Spring } from "react-spring";
-import type { SurveyItemType, surveyLibrary } from "../lib/flowTypes.js";
+import type {
+  SurveyItemType,
+  surveyItemState,
+  surveyLibrary,
+  Options
+} from "../lib/flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
 import NextButton from "./NextButton.js";
 import SimpleSnackbar from "./Snackbar.js";
 
 type Props = {
   items: SurveyItemType[],
-  library: surveyLibrary,
-  buildComponent: () => mixed,
-  buildHandler: () => mixed,
-  completeItem: () => mixed,
+  surveyLibrary: surveyLibrary,
+  buildComponent: (
+    handler: () => mixed,
+    state: surveyItemState,
+    options: Options | typeof undefined,
+    type: string,
+    active: boolean
+  ) => mixed,
+  buildHandler: (type: string, idx: number) => mixed,
+  completeItem: (idx: number) => mixed,
   currentItem: number
 };
 
@@ -19,8 +30,8 @@ type State = {
   currentItemHeight: number,
   totalOffset: number,
   userMessage: {
-    type: String,
-    content: String
+    type: string,
+    content: string
   }
 };
 
@@ -39,6 +50,7 @@ export default class Survey extends React.Component<Props, State> {
 
   componentDidMount() {
     //Get the initial item height for the animations
+    console.log(this.props.currentItem);
     const currentItemHeight = this.subElements[
       this.props.currentItem
     ].getBoundingClientRect().height;
@@ -49,10 +61,11 @@ export default class Survey extends React.Component<Props, State> {
 
   //used to get the reference to each SurveyItem element, to get height.
   getRef = (ref: any, i: number) => {
+    console.log(ref, i);
     this.subElements[i] = ref;
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     const currentItem = this.props.currentItem;
     const nextElem = this.subElements[currentItem];
     const isNextElem = typeof nextElem !== "undefined";
@@ -89,13 +102,6 @@ export default class Survey extends React.Component<Props, State> {
     } else {
       return null;
     }
-  }
-
-  //
-  formTest(e) {
-    e.preventDefault();
-    console.log(e.target);
-    console.log(this);
   }
 
   render() {

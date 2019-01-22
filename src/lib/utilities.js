@@ -1,22 +1,27 @@
 // @flow
-import type { SurveyItemType } from "./flowTypes";
-import Survey from "../components/Survey.js";
+import type { SurveyItemType, surveyLibrary } from "./flowTypes";
+import SurveyContainer from "../components/SurveyContainer.js";
 
 type States = {
   prevState: SurveyItemType[],
   newState: SurveyItemType[]
 };
-export function getStates(ctx: React$ElementRef<typeof Survey>): States {
+export function getStates(
+  ctx: React$ElementRef<typeof SurveyContainer>
+): States {
   let states = {};
   states.prevState = ctx.state.items;
   states.newState = ctx.state.items.slice();
   return states;
 }
 
-export function addPropertiesToItems(items, library) {
+export function addPropertiesToItems(
+  items: SurveyItemType[],
+  library: surveyLibrary
+): SurveyItemType[] {
   const itemsWithProperties = items.map(item => {
     let type = item.type;
-    item.complete = false;
+    item.completed = false;
     item.skipped = true;
     item.surveyItemState = library[type].state();
     return item;

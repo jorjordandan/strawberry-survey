@@ -76,8 +76,13 @@ export default class Survey extends React.Component<Props, State> {
     }
 
     const newItemHeight = nextElem.getBoundingClientRect().height;
-    if (prevProps.currentItem !== this.props.currentItem) {
+    if (prevProps.currentItem < this.props.currentItem) {
       this.setState({ totalOffset: totalOffset + currentItemHeight });
+      this.setState({ currentItemHeight: newItemHeight });
+    } else if (prevProps.currentItem > this.props.currentItem) {
+      this.setState({ totalOffset: totalOffset - currentItemHeight });
+
+      //TODO: Make some big and small components to test this.
       this.setState({ currentItemHeight: newItemHeight });
     }
   }
@@ -122,6 +127,7 @@ export default class Survey extends React.Component<Props, State> {
                         item={item}
                         key={idx}
                         idx={idx}
+                        uncompleteItem={this.props.uncompleteItem}
                         active={this.props.currentItem === idx}
                         itemHeight={this.state.currentItemHeight}
                         surveyComponent={this.props.buildComponent(

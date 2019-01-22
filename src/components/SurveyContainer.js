@@ -80,6 +80,14 @@ export default class SurveyContainer extends React.Component<Props, State> {
       currentItem: this.state.currentItem + 1
     });
   }
+
+  async uncompleteItem(idx: number) {
+    console.log(`unprocessing item ${idx}`);
+    this.setState({
+      currentItem: this.state.currentItem - 1
+    });
+  }
+
   render() {
     return (
       <Survey
@@ -89,6 +97,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
         buildHandler={this.buildHandler}
         currentItem={this.state.currentItem}
         completeItem={this.completeItem.bind(this)}
+        uncompleteItem={this.uncompleteItem.bind(this)}
       />
     );
   }

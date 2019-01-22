@@ -22,19 +22,30 @@ type State = {
   checked: boolean,
   surveyItemState?: {
     checked?: boolean
+  },
+  optionalStyle?: {
+    textAlign: string,
+    height: string
   }
 };
 
 class SurveyItem extends React.Component<Props, State> {
   state = {
     answer: [],
-    checked: false
+    checked: false,
+    optionalStyle: {}
   };
 
   itemEl: ?HTMLDivElement;
 
   componentDidMount() {
     this.props.getRef(this.itemEl, this.props.idx);
+    console.log("ping");
+    if (this.props.item.type === "section") {
+      this.setState({
+        optionalStyle: { textAlign: "center", height: "300px" }
+      });
+    }
   }
 
   getDetailsIfExist() {
@@ -50,9 +61,10 @@ class SurveyItem extends React.Component<Props, State> {
     }
   }
 
-  getStyle() {
-    if (this.props.item.type === "section") {
-      return { textAlign: "center", height: "300px" };
+  itemClick() {
+    console.log(`item of type ${this.props.item.type} clicked`);
+    if (this.props.active === false && this.props.item.completed === true) {
+      this.props.uncompleteItem(this.props.item.idx);
     }
   }
 
@@ -71,7 +83,8 @@ class SurveyItem extends React.Component<Props, State> {
         )}
         <SurveyItemContainer
           ref={i => (this.itemEl = i)}
-          style={this.getStyle()}
+          style={this.state.optionalStyle}
+          onClick={this.itemClick.bind(this)}
         >
           <SurveyQuestion
             number={this.props.item.numbering}

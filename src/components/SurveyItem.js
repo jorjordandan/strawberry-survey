@@ -50,28 +50,40 @@ class SurveyItem extends React.Component<Props, State> {
     }
   }
 
+  getStyle() {
+    if (this.props.item.type === "section") {
+      return { textAlign: "center", height: "300px" };
+    }
+  }
+
   render() {
     const {
       item: { question, required }
     } = this.props;
     return (
-      <React.Fragment>
-        <SurveyCursor
-          active={this.props.active}
-          completed={this.props.item.completed}
-          itemHeight={this.props.itemHeight}
-        />
-        <SurveyItemContainer ref={i => (this.itemEl = i)}>
+      <div>
+        {this.props.item.type !== "section" && (
+          <SurveyCursor
+            active={this.props.active}
+            completed={this.props.item.completed}
+            itemHeight={this.props.itemHeight}
+          />
+        )}
+        <SurveyItemContainer
+          ref={i => (this.itemEl = i)}
+          style={this.getStyle()}
+        >
           <SurveyQuestion
-            number={this.props.idx + 1}
+            number={this.props.item.numbering}
             question={question}
             required={required}
             active={this.props.active}
+            type={this.props.item.type}
           />
           {this.getDetailsIfExist()}
           {this.props.surveyComponent}
         </SurveyItemContainer>
-      </React.Fragment>
+      </div>
     );
   }
 }

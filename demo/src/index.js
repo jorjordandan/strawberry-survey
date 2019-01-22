@@ -5,6 +5,17 @@ import Typography from "@material-ui/core/Typography";
 
 const survey = [
   {
+    question: "Welcome to the Robot Survey!",
+    details: "This is to determine if you are a good robot or a bad one.",
+    type: "section",
+    required: false,
+    options: {
+      nextButtonText: "Start survey"
+    },
+    skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
+    responses: []
+  },
+  {
     question: "Are you a robot?",
     type: "checkbox",
     required: true,

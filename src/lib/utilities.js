@@ -19,11 +19,23 @@ export function addPropertiesToItems(
   items: SurveyItemType[],
   library: surveyLibrary
 ): SurveyItemType[] {
+  let numbering = 1;
   const itemsWithProperties = items.map(item => {
     let type = item.type;
     item.completed = false;
     item.skipped = true;
-    item.surveyItemState = library[type].state();
+
+    //increment for regular questions, reset on sections
+    if (type !== "section") {
+      item.numbering = numbering;
+      numbering += 1;
+    } else {
+      item.numbering = 1;
+      numbering = 1;
+    }
+    if (library[type] && library[type].state) {
+      item.surveyItemState = library[type].state();
+    }
     return item;
   });
   return itemsWithProperties;

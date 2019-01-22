@@ -7,7 +7,8 @@ type Props = {
   number?: number,
   question: string,
   required: boolean,
-  active: boolean
+  active: boolean,
+  type: string
 };
 
 SurveyQuestion.defaultProps = {
@@ -15,20 +16,25 @@ SurveyQuestion.defaultProps = {
   active: false
 };
 
-function addActiveClass(active: boolean): string {
-  let defaultClasses = "survey-question";
-  if (active) {
-    return defaultClasses + " active";
-  } else {
-    return defaultClasses + " inactive";
+function addActiveClass(props: Props): string {
+  let classes = "survey-question";
+  const { active, type } = props;
+  let addedClasses = "";
+  addedClasses = active ? " active" : " inactive";
+  if (type === "section") {
+    addedClasses += " section";
   }
+  classes += addedClasses;
+  return classes;
 }
 
 function SurveyQuestion(props: Props) {
   return (
-    <div className={addActiveClass(props.active)}>
+    <div className={addActiveClass(props)}>
       <Typography variant="h4" gutterBottom>
-        {props.number && props.number.toString() + ". "}
+        {props.type !== "section" &&
+          props.number &&
+          props.number.toString() + ". "}
         {props.question}
         {props.required && "*"}
       </Typography>

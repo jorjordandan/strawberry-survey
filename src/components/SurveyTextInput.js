@@ -42,7 +42,7 @@ class SurveyTextInput extends Component<Props, State> {
           onChange={this.onChange.bind(this)}
           label={this.props.options.label}
           disabled={!this.props.active}
-          helperText={this.props.options.helperText}
+          helperText={"[Enter] to submit"}
         />
       </form>
     );

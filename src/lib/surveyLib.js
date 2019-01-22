@@ -11,6 +11,8 @@ import SurveyTextInput, {
   textInputState
 } from "../components/SurveyTextInput";
 
+import SurveySection, { sectionHandler } from "../components/SurveySection";
+
 // this function imports the survey components, their handlers,
 // their state, and the components themselves, and assembles them
 // into a library. This allows the Survey component to build the
@@ -30,6 +32,11 @@ export default function getSurveyLib(): surveyLibrary {
     component: SurveyTextInput,
     handler: textInputHandler,
     state: textInputState
+  };
+
+  surveyLib.section = {
+    component: SurveySection,
+    handler: sectionHandler
   };
 
   return surveyLib;

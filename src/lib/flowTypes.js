@@ -1,14 +1,17 @@
 //@flow
 import type { checkboxProps } from "../components/SurveyCheckbox";
+import type { sectionProps } from "../components/SurveySection";
 
 export type Options = {
   forwardOnly?: boolean,
   label?: string,
-  helperText?: string
+  helperText?: string,
+  nextButtonText?: string
 };
 
 export type surveyItemState = {
-  checked?: boolean
+  checked?: boolean,
+  value?: string
 };
 
 export type SurveyItemType = {
@@ -19,6 +22,7 @@ export type SurveyItemType = {
   options?: Options,
   skip?: any,
   completed: boolean,
+  numbering: number, // used for numbering survey questions, resets on sections.
   skipped: boolean,
   response: string[],
   status?: string,
@@ -33,7 +37,11 @@ export type surveyLibrary = {
   checkbox?: {
     component: checkboxProps => mixed,
     handler: () => mixed,
-    state?: surveyItemState,
-    options?: Options
+    state?: surveyItemState
+  },
+  section?: {
+    component: sectionProps => mixed,
+    handler: () => mixed,
+    state?: () => surveyItemState
   }
 };

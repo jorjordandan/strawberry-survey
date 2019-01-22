@@ -18,7 +18,7 @@ const survey = [
     question: "What's your robo name?",
     details: "A robo name is like a regular name, but more robotic.",
     type: "textInput",
-    required: true,
+    required: false,
     options: {
       label: "name"
     },

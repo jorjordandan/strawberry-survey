@@ -1,11 +1,7 @@
 //@flow
 
 import * as React from "react";
-import type {
-  SurveyItemType,
-  surveyItemState,
-  Options
-} from "../lib/flowTypes.js";
+import type { SurveyItemType } from "../lib/flowTypes.js";
 import styled, { type ReactComponentStyled } from "styled-components";
 import SurveyQuestion from "./SurveyQuestion";
 import SurveyDetails from "./SurveyDetails";
@@ -13,13 +9,7 @@ import SurveyCursor from "./SurveyCursor";
 
 type Props = {
   item: SurveyItemType,
-  surveyComponent: (
-    handler: () => mixed,
-    state: surveyItemState,
-    options: Options | typeof undefined,
-    type: string,
-    active: boolean
-  ) => mixed,
+  surveyComponent: React$Element<any>,
   active: boolean,
   completed?: boolean,
   idx: number,
@@ -47,11 +37,6 @@ class SurveyItem extends React.Component<Props, State> {
     this.props.getRef(this.itemEl, this.props.idx);
   }
 
-  onRest() {
-    //do something...
-    // console.log("boop");
-  }
-
   getDetailsIfExist() {
     if (this.props.item.details) {
       return (
@@ -73,12 +58,12 @@ class SurveyItem extends React.Component<Props, State> {
       <React.Fragment>
         <SurveyCursor
           active={this.props.active}
-          onRest={this.onRest.bind(this)}
           completed={this.props.item.completed}
           itemHeight={this.props.itemHeight}
         />
         <SurveyItemContainer ref={i => (this.itemEl = i)}>
           <SurveyQuestion
+            number={this.props.idx + 1}
             question={question}
             required={required}
             active={this.props.active}

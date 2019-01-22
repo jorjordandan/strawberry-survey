@@ -20,7 +20,7 @@ type Props = {
     options: Options | typeof undefined,
     type: string,
     active: boolean
-  ) => mixed,
+  ) => React$Element<any>,
   buildHandler: (type: string, idx: number) => mixed,
   completeItem: (idx: number) => mixed,
   currentItem: number
@@ -50,7 +50,6 @@ export default class Survey extends React.Component<Props, State> {
 
   componentDidMount() {
     //Get the initial item height for the animations
-    console.log(this.props.currentItem);
     const currentItemHeight = this.subElements[
       this.props.currentItem
     ].getBoundingClientRect().height;
@@ -60,8 +59,7 @@ export default class Survey extends React.Component<Props, State> {
   }
 
   //used to get the reference to each SurveyItem element, to get height.
-  getRef = (ref: any, i: number) => {
-    console.log(ref, i);
+  getRef = (ref: HTMLDivElement, i: number) => {
     this.subElements[i] = ref;
   };
 

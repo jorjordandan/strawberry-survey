@@ -26,7 +26,7 @@ function addActiveClass(active: boolean): string {
 function SurveyDetails(props: Props) {
   return (
     <div className={addActiveClass(props.active)}>
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="subtitle1" gutterBottom>
         {props.details}
       </Typography>
     </div>

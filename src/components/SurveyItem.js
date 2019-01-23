@@ -13,8 +13,10 @@ type Props = {
   active: boolean,
   completed?: boolean,
   idx: number,
+  currentItem: number,
   itemHeight: number,
-  getRef: (ref: any, i: number) => mixed
+  getRef: (ref: any, i: number) => mixed,
+  uncompleteItem: (idx: number) => mixed
 };
 
 type State = {
@@ -40,7 +42,6 @@ class SurveyItem extends React.Component<Props, State> {
 
   componentDidMount() {
     this.props.getRef(this.itemEl, this.props.idx);
-    console.log("ping");
     if (this.props.item.type === "section") {
       this.setState({
         optionalStyle: { textAlign: "center", height: "300px" }
@@ -62,9 +63,12 @@ class SurveyItem extends React.Component<Props, State> {
   }
 
   itemClick() {
-    console.log(`item of type ${this.props.item.type} clicked`);
-    if (this.props.active === false && this.props.item.completed === true) {
-      this.props.uncompleteItem(this.props.item.idx);
+    if (
+      this.props.active === false &&
+      this.props.item.completed === true &&
+      this.props.idx < this.props.currentItem
+    ) {
+      this.props.uncompleteItem(this.props.idx);
     }
   }
 

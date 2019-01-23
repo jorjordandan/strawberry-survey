@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import SurveyContainer from "../../src/components/SurveyContainer.js";
-import Typography from "@material-ui/core/Typography";
 
 const survey = [
   {
@@ -53,10 +52,7 @@ const SurveyOptions = {
 class Demo extends Component {
   render() {
     return (
-      <div style={{ height: "100vh" }}>
-        <Typography variant="h2" gutterBottom>
-          Strawberry-Survey Demo
-        </Typography>
+      <div style={{ maxHeight: "100vh" }}>
         <SurveyContainer items={survey} options={SurveyOptions} />
 
         <div className="containerStyle" />

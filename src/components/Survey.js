@@ -23,6 +23,7 @@ type Props = {
   ) => React$Element<any>,
   buildHandler: (type: string, idx: number) => mixed,
   completeItem: (idx: number) => mixed,
+  uncompleteItem: (idx: number) => mixed,
   currentItem: number
 };
 
@@ -125,6 +126,7 @@ export default class Survey extends React.Component<Props, State> {
                       <SurveyItem
                         getRef={this.getRef}
                         item={item}
+                        currentItem={this.props.currentItem}
                         key={idx}
                         idx={idx}
                         uncompleteItem={this.props.uncompleteItem}

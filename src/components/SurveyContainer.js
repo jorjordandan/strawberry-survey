@@ -24,11 +24,11 @@ type State = {
 export default class SurveyContainer extends React.Component<Props, State> {
   state = { items: this.props.items, lib: getSurveyLib(), currentItem: 0 };
 
+  // User provided survey objects need some extra properties added to them.
+  //Definitions for each component's state are stored
+  // with the component itself, imported into 'surveyLib' and then
+  // accessed here by type.
   componentDidMount() {
-    // User provided survey objects need some extra properties added to them.
-    //Definitions for each component's state are stored
-    // with the component itself, imported into 'surveyLib' and then
-    // accessed here by type.
     const { items } = this.props;
     const library = this.state.lib;
     this.setState({

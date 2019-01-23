@@ -1,6 +1,6 @@
 # Strawberry Survey
 
-## Typeform inspired surveys built with React, Styled-components, and nwb.
+## Typeform inspired surveys built with React, Material ui, and React-Spring.
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
@@ -32,7 +32,6 @@ const survey = [
   {
     question: "Do you like being a robot?",
     type: "checkbox",
-    required: true
   }
 ];
 ```
@@ -75,7 +74,7 @@ handleComplete = results => {
 
 #### checkbox
 
-The Checkbox component provides a simple checkbox. You can add an optional label, or specify it's requiredTrue, for example, if you need the user's consnet to continue the survey.
+The Checkbox component provides a simple checkbox. You can add an optional label, or specify it's requiredTrue, for example, if you need the user's consent to continue the survey.
 Example:
 
 ```
@@ -90,7 +89,7 @@ Example:
   },
 ```
 
-All responses are returned as arrays, which may contain ints, strings, or booleans,depending on the question type. A checkbox response is a boolean in an array:
+All responses are returned as arrays, which may contain ints, strings, or booleans, depending on the question type. A checkbox response is a boolean in an array:
 
 ```
 [
@@ -102,6 +101,40 @@ All responses are returned as arrays, which may contain ints, strings, or boolea
   }
 ]
 ```
+
+#### text input
+
+Provides a text input. You can add an optional label.
+Example:
+
+```
+{
+    question: "What is your name?",
+    type: "textInput",
+    required: true, //optional, defaults false
+    options: {
+      label: "Your name:", optional, default none
+    }
+  },
+```
+
+A text input response looks like this:
+
+```
+[
+  {
+    question: "What is your name?",
+    completed: true,
+    skipped: false,
+    response: ["Robo-man"] //example checkbox response
+  }
+]
+```
+
+#### section
+
+Provides a new section, or starting page.
+Example:
 
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo

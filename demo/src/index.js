@@ -25,6 +25,20 @@ const survey = [
     responses: []
   },
   {
+    question: "What is your robo-type?",
+    type: "multiChoice",
+    options: {
+      labels: [
+        "good robot",
+        "bad Robot",
+        "nefarious robot",
+        "existential questions robot"
+      ]
+    },
+    skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
+    responses: []
+  },
+  {
     question: "What's your robo name?",
     details: "A robo name is like a regular name, but more robotic.",
     type: "textInput",

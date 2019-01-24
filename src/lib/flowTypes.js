@@ -1,12 +1,12 @@
 //@flow
-import React from "react";
 import type { sectionProps } from "../components/SurveySection";
 
 export type Options = {
   forwardOnly?: boolean,
   label?: string,
   helperText?: string,
-  nextButtonText?: string
+  nextButtonText?: string,
+  labels?: string[]
 };
 
 export type surveyItemState = {

@@ -1,7 +1,7 @@
 //@flow
 import React from "react";
 import { Checkbox, FormControlLabel, Button } from "@material-ui/core";
-import type { surveyItemState, Options } from "../lib/flowTypes.js";
+import type { Options } from "../lib/flowTypes.js";
 import { getStates } from "../lib/utilities.js";
 import SurveyContainer from "../components/SurveyContainer.js";
 
@@ -53,15 +53,13 @@ const checkboxHandler = () => {
   ) => {
     event.preventDefault();
     //return two copies of state...
-    const { prevState, newState } = getStates(ctx);
+    const { newState } = getStates(ctx);
     const state = newState[idx];
     // eslint-disable-next-line no-unused-expressions
     (event.currentTarget: HTMLElement);
     const inputVal = event.currentTarget.getElementsByTagName("input")[0]
       .checked;
-    console.log(inputVal);
-    //pass in the new survetItemState, answer, and set completed to true
-    // const newAnswer = !prevState[idx].surveyItemState.checked;
+
     state.surveyItemState = {
       checked: inputVal
     };

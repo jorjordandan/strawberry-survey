@@ -1,7 +1,7 @@
 //@flow
 import React, { Component } from "react";
 import { TextField } from "@material-ui/core";
-import type { surveyItemState, Options } from "../lib/flowTypes.js";
+import type { Options } from "../lib/flowTypes.js";
 import { getStates } from "../lib/utilities.js";
 import SurveyContainer from "../components/SurveyContainer.js";
 
@@ -71,10 +71,6 @@ const textInputHandler = () => {
 
     ctx.completeItem(idx);
   };
-};
-
-const textInputState = (): State => {
-  return { value: "state" };
 };
 
 export default SurveyTextInput;

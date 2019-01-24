@@ -2,6 +2,9 @@
 import type { surveyLibrary } from "./flowTypes.js";
 
 import SurveyCheckbox, { checkboxHandler } from "../components/SurveyCheckbox";
+import SurveyMultipleChoice, {
+  multiChoiceHandler
+} from "../components/SurveyMultipleChoice";
 
 import SurveyTextInput, {
   textInputHandler
@@ -31,6 +34,11 @@ export default function getSurveyLib(): surveyLibrary {
   surveyLib.section = {
     component: SurveySection,
     handler: sectionHandler
+  };
+
+  surveyLib.multiChoice = {
+    component: SurveyMultipleChoice,
+    handler: multiChoiceHandler
   };
 
   return surveyLib;

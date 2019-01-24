@@ -1,5 +1,5 @@
 //@flow
-import type { checkboxProps } from "../components/SurveyCheckbox";
+import React from "react";
 import type { sectionProps } from "../components/SurveySection";
 
 export type Options = {
@@ -35,13 +35,15 @@ export type SurveyItemType = {
 
 export type surveyLibrary = {
   checkbox?: {
-    component: checkboxProps => mixed,
-    handler: () => mixed,
-    state?: surveyItemState
+    component: Class<any>,
+    handler: () => mixed
   },
   section?: {
     component: sectionProps => mixed,
-    handler: () => mixed,
-    state?: () => surveyItemState
+    handler: () => mixed
+  },
+  textInput?: {
+    component: Class<any>,
+    handler: () => mixed
   }
 };

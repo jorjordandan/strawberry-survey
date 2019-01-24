@@ -7,7 +7,6 @@ import SurveyContainer from "../components/SurveyContainer.js";
 
 type Props = {
   onHandle: (event: SyntheticEvent<>) => mixed,
-  itemState: surveyItemState,
   options: Options,
   active: boolean
 };
@@ -22,7 +21,6 @@ class SurveyCheckbox extends React.Component<Props, State> {
   };
 
   onClick = () => {
-    console.log(this.props.itemState.checked);
     this.setState({ checked: !this.state.checked });
   };
 
@@ -79,10 +77,6 @@ const checkboxHandler = () => {
   };
 };
 
-const checkboxState = (): State => {
-  return { checked: false };
-};
-
 export default SurveyCheckbox;
-export { checkboxHandler, checkboxState };
+export { checkboxHandler };
 export type { Props as checkboxProps };

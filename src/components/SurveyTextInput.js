@@ -7,7 +7,6 @@ import SurveyContainer from "../components/SurveyContainer.js";
 
 type Props = {
   onHandle: (event: SyntheticEvent<>) => mixed,
-  itemState: surveyItemState,
   options: Options,
   active: boolean
 };
@@ -64,7 +63,6 @@ const textInputHandler = () => {
     const state = newState[idx];
 
     //pass in the new survetItemState, answer, and set completed to true
-    state.surveyItemState = { value: inputVal };
     state.answer = { value: inputVal };
     state.completed = true;
     state.skipped = false;
@@ -80,5 +78,5 @@ const textInputState = (): State => {
 };
 
 export default SurveyTextInput;
-export { textInputHandler, textInputState };
+export { textInputHandler };
 export type { Props as textInputProps };

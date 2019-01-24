@@ -22,6 +22,7 @@ type Props = {
 type State = {
   answer: string[],
   checked: boolean,
+  animation: string,
   surveyItemState?: {
     checked?: boolean
   },
@@ -35,7 +36,8 @@ class SurveyItem extends React.Component<Props, State> {
   state = {
     answer: [],
     checked: false,
-    optionalStyle: {}
+    optionalStyle: {},
+    animation: ""
   };
 
   itemEl: ?HTMLDivElement;
@@ -46,6 +48,26 @@ class SurveyItem extends React.Component<Props, State> {
       this.setState({
         optionalStyle: { textAlign: "center", height: "300px" }
       });
+    }
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    let animation: string = "";
+    if (
+      prevProps.active !== this.props.active ||
+      prevProps.completed !== this.props.completed
+    ) {
+      if (this.props.completed) {
+        animation = "wiggle";
+      }
+      if (this.props.active) {
+        animation = "show";
+      }
+      if (this.props.active && this.props.completed) {
+        animation = "wiggle";
+      }
+
+      this.setState({ animation: animation });
     }
   }
 
@@ -83,6 +105,7 @@ class SurveyItem extends React.Component<Props, State> {
             active={this.props.active}
             completed={this.props.item.completed}
             itemHeight={this.props.itemHeight}
+            animation={this.state.animation}
           />
         )}
         <SurveyItemContainer

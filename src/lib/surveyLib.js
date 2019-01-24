@@ -1,14 +1,10 @@
 // @flow
 import type { surveyLibrary } from "./flowTypes.js";
 
-import SurveyCheckbox, {
-  checkboxHandler,
-  checkboxState
-} from "../components/SurveyCheckbox";
+import SurveyCheckbox, { checkboxHandler } from "../components/SurveyCheckbox";
 
 import SurveyTextInput, {
-  textInputHandler,
-  textInputState
+  textInputHandler
 } from "../components/SurveyTextInput";
 
 import SurveySection, { sectionHandler } from "../components/SurveySection";
@@ -24,14 +20,12 @@ export default function getSurveyLib(): surveyLibrary {
 
   surveyLib.checkbox = {
     component: SurveyCheckbox,
-    handler: checkboxHandler,
-    state: checkboxState
+    handler: checkboxHandler
   };
 
   surveyLib.textInput = {
     component: SurveyTextInput,
-    handler: textInputHandler,
-    state: textInputState
+    handler: textInputHandler
   };
 
   surveyLib.section = {

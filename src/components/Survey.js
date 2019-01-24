@@ -127,6 +127,7 @@ export default class Survey extends React.Component<Props, State> {
                         getRef={this.getRef}
                         item={item}
                         currentItem={this.props.currentItem}
+                        completed={item.completed}
                         key={idx}
                         idx={idx}
                         uncompleteItem={this.props.uncompleteItem}

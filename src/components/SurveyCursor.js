@@ -6,6 +6,7 @@ type Props = {
   active: boolean,
   completed: boolean,
   flash: boolean,
+  animation: string,
   onRest: () => mixed
 };
 
@@ -49,18 +50,6 @@ const Container = Keyframes.Spring({
 });
 
 export default function SurveyCursor(props: Props) {
-  const getAnimation = () => {
-    // if (props.completed && props.active) {
-    //   return "show";
-    // }
-    if (props.completed) {
-      return "wiggle";
-    }
-    if (props.active) {
-      return "show";
-    }
-  };
-
   const getItemHeight = () => {
     if (props.active) {
       return props.itemHeight - 60;
@@ -78,7 +67,7 @@ export default function SurveyCursor(props: Props) {
 
   return (
     <Container
-      state={getAnimation()}
+      state={props.animation}
       onRest={props.onRest}
       config={{ tension: 220, friction: 10, velocity: 50, clamp: true }}
     >

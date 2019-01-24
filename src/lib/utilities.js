@@ -33,9 +33,7 @@ export function addPropertiesToItems(
       item.numbering = 1;
       numbering = 1;
     }
-    if (library[type] && library[type].state) {
-      item.surveyItemState = library[type].state();
-    }
+
     return item;
   });
   return itemsWithProperties;

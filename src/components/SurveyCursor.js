@@ -41,7 +41,7 @@ const Container = Keyframes.Spring({
     });
     await next({
       backgroundColor: "#9d9",
-      transform: "rotate(-2deg)",
+      transform: "rotate(0deg)",
       width: "2px",
       config: config.wobbly
     });
@@ -50,6 +50,9 @@ const Container = Keyframes.Spring({
 
 export default function SurveyCursor(props: Props) {
   const getAnimation = () => {
+    // if (props.completed && props.active) {
+    //   return "show";
+    // }
     if (props.completed) {
       return "wiggle";
     }

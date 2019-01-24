@@ -22,6 +22,7 @@ class SurveyCheckbox extends React.Component<Props, State> {
   };
 
   onClick = () => {
+    console.log(this.props.itemState.checked);
     this.setState({ checked: !this.state.checked });
   };
 
@@ -55,7 +56,6 @@ const checkboxHandler = () => {
     event.preventDefault();
     //return two copies of state...
     const { prevState, newState } = getStates(ctx);
-
     const state = newState[idx];
     // eslint-disable-next-line no-unused-expressions
     (event.currentTarget: HTMLElement);
@@ -64,12 +64,12 @@ const checkboxHandler = () => {
     console.log(inputVal);
     //pass in the new survetItemState, answer, and set completed to true
     // const newAnswer = !prevState[idx].surveyItemState.checked;
-    // state.surveyItemState = {
-    //   checked: newAnswer
-    // };
-    // state.answer = {
-    //   checked: newAnswer
-    // };
+    state.surveyItemState = {
+      checked: inputVal
+    };
+    state.answer = {
+      checked: inputVal
+    };
     state.completed = true;
     state.skipped = false;
     //.. and replace the old state.

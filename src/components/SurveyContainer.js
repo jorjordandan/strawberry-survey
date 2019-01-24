@@ -71,7 +71,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
   async completeItem(idx: number) {
     console.log(`Processing item ${idx}`);
     if (this.state.items[idx].required && !this.state.items[idx].completed) {
-      console.log("this question is required!");
+      console.log("this question is required!"); //use snackbar
       return true;
     }
 

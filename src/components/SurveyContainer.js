@@ -95,7 +95,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
         surveyLibrary={this.state.lib}
         buildComponent={this.buildSurveyComponent.bind(this)}
         buildHandler={this.buildHandler}
-        currentItem={this.state.currentItem}
+        currentItemIdx={this.state.currentItem}
         completeItem={this.completeItem.bind(this)}
         uncompleteItem={this.uncompleteItem.bind(this)}
       />

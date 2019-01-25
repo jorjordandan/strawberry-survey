@@ -25,7 +25,7 @@ type Props = {
   buildHandler: (type: string, idx: number) => mixed,
   completeItem: (idx: number) => mixed,
   uncompleteItem: (idx: number) => mixed,
-  currentItem: number
+  currentItemIdx: number
 };
 
 type State = {
@@ -55,7 +55,7 @@ export default class Survey extends React.Component<Props, State> {
   componentDidMount() {
     //Get the initial item height for the animations
     const currentItemHeight = this.subElements[
-      this.props.currentItem
+      this.props.currentItemIdx
     ].getBoundingClientRect().height;
     this.setState({
       currentItemHeight
@@ -63,16 +63,19 @@ export default class Survey extends React.Component<Props, State> {
   }
 
   //used to get the reference to each SurveyItem element, to get height.
+  // This function is passed to surveyItem, but tracked in this component,
+  // as an array of div elements.
   getRef = (ref: HTMLDivElement, i: number) => {
     this.subElements[i] = ref;
   };
 
   componentDidUpdate(prevProps: Props) {
-    const currentItemIdx = this.props.currentItem;
+    const currentItemIdx = this.props.currentItemIdx;
     const nextElem = this.subElements[currentItemIdx];
     const isNextElem = typeof nextElem !== "undefined";
     const { totalOffset, currentItemHeight } = this.state;
     const currentItem = this.props.items[currentItemIdx];
+    let newItemHeight = 0;
 
     if (!isNextElem) {
       //do something.
@@ -85,15 +88,16 @@ export default class Survey extends React.Component<Props, State> {
     ) {
       this.setState({ currentSectionTitle: currentItem.sectionTitle });
     }
+    //needs to be declared after the !isNextElem guard
+    newItemHeight = nextElem.getBoundingClientRect().height;
 
-    const newItemHeight = nextElem.getBoundingClientRect().height;
-    if (prevProps.currentItem < this.props.currentItem) {
+    //if current item is bigger, then animate the page to scroll down
+    if (this.props.currentItemIdx > prevProps.currentItemIdx) {
       this.setState({ totalOffset: totalOffset + currentItemHeight });
       this.setState({ currentItemHeight: newItemHeight });
-    } else if (prevProps.currentItem > this.props.currentItem) {
+      //if the current item is smaller, then scroll back up.
+    } else if (this.props.currentItemIdx < prevProps.currentItemIdx) {
       this.setState({ totalOffset: totalOffset - currentItemHeight });
-
-      //TODO: Make some big and small components to test this.
       this.setState({ currentItemHeight: newItemHeight });
     }
   }
@@ -105,7 +109,7 @@ export default class Survey extends React.Component<Props, State> {
 
   //don't get next button if item is required.
   getNextButton() {
-    const idx = this.props.currentItem;
+    const idx = this.props.currentItemIdx;
     const currentItem = this.props.items[idx];
 
     if (!currentItem) {
@@ -143,19 +147,19 @@ export default class Survey extends React.Component<Props, State> {
                       <SurveyItem
                         getRef={this.getRef}
                         item={item}
-                        currentItem={this.props.currentItem}
+                        currentItem={this.props.currentItemIdx}
                         completed={item.completed}
                         key={idx}
                         idx={idx}
                         uncompleteItem={this.props.uncompleteItem}
-                        active={this.props.currentItem === idx}
+                        active={this.props.currentItemIdx === idx}
                         itemHeight={this.state.currentItemHeight}
                         surveyComponent={this.props.buildComponent(
                           this.props.buildHandler.bind(this, item.type, idx),
                           item.surveyItemState,
                           item.options,
                           item.type,
-                          this.props.currentItem === idx
+                          this.props.currentItemIdx === idx
                         )}
                       />
                     );

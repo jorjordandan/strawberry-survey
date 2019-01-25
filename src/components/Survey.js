@@ -10,6 +10,7 @@ import type {
 import SurveyItem from "./SurveyItem.js";
 import NextButton from "./NextButton.js";
 import SimpleSnackbar from "./Snackbar.js";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 type Props = {
   items: SurveyItemType[],
@@ -30,6 +31,7 @@ type Props = {
 type State = {
   currentItemHeight: number,
   totalOffset: number,
+  currentSectionTitle: string,
   userMessage: {
     type: string,
     content: string
@@ -40,6 +42,7 @@ export default class Survey extends React.Component<Props, State> {
   state = {
     currentItemHeight: 0,
     totalOffset: 0,
+    currentSectionTitle: "",
     userMessage: {
       type: "none",
       content: ""
@@ -65,15 +68,22 @@ export default class Survey extends React.Component<Props, State> {
   };
 
   componentDidUpdate(prevProps: Props) {
-    const currentItem = this.props.currentItem;
-    const nextElem = this.subElements[currentItem];
+    const currentItemIdx = this.props.currentItem;
+    const nextElem = this.subElements[currentItemIdx];
     const isNextElem = typeof nextElem !== "undefined";
     const { totalOffset, currentItemHeight } = this.state;
+    const currentItem = this.props.items[currentItemIdx];
 
     if (!isNextElem) {
       //do something.
       console.log("Survey is done!");
       return true;
+    }
+    if (
+      currentItem.sectionTitle !== undefined &&
+      currentItem.sectionTitle !== this.state.currentSectionTitle
+    ) {
+      this.setState({ currentSectionTitle: currentItem.sectionTitle });
     }
 
     const newItemHeight = nextElem.getBoundingClientRect().height;
@@ -111,6 +121,13 @@ export default class Survey extends React.Component<Props, State> {
   render() {
     return (
       <React.Fragment>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h6" color="inherit">
+              {this.state.currentSectionTitle}
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <Spring
           from={{ transform: "translate(0px, 10px)" }}
           to={{ transform: `translate(0px, ${-this.state.totalOffset}px)` }}

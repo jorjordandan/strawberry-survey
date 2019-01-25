@@ -19,6 +19,7 @@ export type SurveyItemType = {
   details?: string,
   type: string,
   required: boolean,
+  sectionTitle: string,
   options?: Options,
   skip?: any,
   completed: boolean,

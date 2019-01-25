@@ -7,6 +7,7 @@ const survey = [
     question: "Welcome to the Robot Survey!",
     details: "This is to determine if you are a good robot or a bad one.",
     type: "section",
+    sectionTitle: "First a few questions about your robot status...",
     required: false,
     options: {
       nextButtonText: "Start survey"
@@ -34,6 +35,18 @@ const survey = [
         "nefarious robot",
         "existential questions robot"
       ]
+    },
+    skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
+    responses: []
+  },
+  {
+    question: "Okay now we will ask some more questions",
+    details: "This is so we can have another section",
+    type: "section",
+    sectionTitle: "It's about to get real...",
+    required: false,
+    options: {
+      nextButtonText: "Continue survey"
     },
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
     responses: []

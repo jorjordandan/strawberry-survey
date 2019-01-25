@@ -52,7 +52,7 @@ const checkboxHandler = () => {
     idx: number
   ) => {
     event.preventDefault();
-    //return two copies of state...
+    //return copy of state...
     const { newState } = getStates(ctx);
     const state = newState[idx];
     // eslint-disable-next-line no-unused-expressions
@@ -60,9 +60,6 @@ const checkboxHandler = () => {
     const inputVal = event.currentTarget.getElementsByTagName("input")[0]
       .checked;
 
-    state.surveyItemState = {
-      checked: inputVal
-    };
     state.answer = {
       checked: inputVal
     };

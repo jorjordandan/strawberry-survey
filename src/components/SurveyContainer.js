@@ -18,16 +18,17 @@ type Props = {
 type State = {
   items: SurveyItemType[],
   lib: surveyLibrary,
-  currentItem: number
+  currentItemIdx: number
 };
 
 export default class SurveyContainer extends React.Component<Props, State> {
-  state = { items: this.props.items, lib: getSurveyLib(), currentItem: 0 };
+  state = {
+    items: this.props.items,
+    lib: getSurveyLib(),
+    currentItemIdx: 0
+  };
 
   // User provided survey objects need some extra properties added to them.
-  //Definitions for each component's state are stored
-  // with the component itself, imported into 'surveyLib' and then
-  // accessed here by type.
   componentDidMount() {
     const { items } = this.props;
     const library = this.state.lib;
@@ -37,7 +38,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
   }
 
   // Each survey item type needs a different handler function.
-  // Like the state, the handler function is defined with the component,
+  // the handler function is defined with the component,
   // and then imported into surveyLib, and then accessed here based on the type.
   buildHandler = (
     type: string,
@@ -48,9 +49,8 @@ export default class SurveyContainer extends React.Component<Props, State> {
     newHandler(event, this, idx);
   };
 
-  // Like the item state and handler, we access the
-  // actual component based on the user provided object, and pass
-  // in all the required props.
+  // Like the handler, we access the ctual component based on the
+  // a user provided object, and pass in all the required props.
   buildSurveyComponent(
     handler: () => mixed,
     state: surveyItemState,
@@ -75,16 +75,19 @@ export default class SurveyContainer extends React.Component<Props, State> {
       return true;
     }
 
-    await wait(800);
+    //dont stall animation of sections.
+    if (this.state.items[idx].type !== "section") {
+      await wait(800);
+    }
     this.setState({
-      currentItem: this.state.currentItem + 1
+      currentItemIdx: this.state.currentItemIdx + 1
     });
   }
 
-  async uncompleteItem(idx: number) {
+  uncompleteItem(idx: number) {
     console.log(`unprocessing item ${idx}`);
     this.setState({
-      currentItem: this.state.currentItem - 1
+      currentItemIdx: this.state.currentItemIdx - 1
     });
   }
 
@@ -95,7 +98,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
         surveyLibrary={this.state.lib}
         buildComponent={this.buildSurveyComponent.bind(this)}
         buildHandler={this.buildHandler}
-        currentItemIdx={this.state.currentItem}
+        currentItemIdx={this.state.currentItemIdx}
         completeItem={this.completeItem.bind(this)}
         uncompleteItem={this.uncompleteItem.bind(this)}
       />

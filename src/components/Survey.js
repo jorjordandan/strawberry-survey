@@ -54,9 +54,9 @@ export default class Survey extends React.Component<Props, State> {
 
   componentDidMount() {
     //Get the initial item height for the animations
-    const currentItemHeight = this.subElements[
-      this.props.currentItemIdx
-    ].getBoundingClientRect().height;
+    const currentItemHeight =
+      this.subElements[this.props.currentItemIdx].getBoundingClientRect()
+        .height + 200; //kludge for bug where it doesn't recognize padding on first element...
     this.setState({
       currentItemHeight
     });
@@ -140,14 +140,14 @@ export default class Survey extends React.Component<Props, State> {
           {props => {
             return (
               <div style={props}>
-                <div style={{ height: "30vh" }} />
+                <div />
                 {this.props.items &&
                   this.props.items.map((item, idx) => {
                     return (
                       <SurveyItem
                         getRef={this.getRef}
                         item={item}
-                        currentItem={this.props.currentItemIdx}
+                        currentItemIdx={this.props.currentItemIdx}
                         completed={item.completed}
                         key={idx}
                         idx={idx}

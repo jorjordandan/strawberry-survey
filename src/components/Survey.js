@@ -93,11 +93,11 @@ export default class Survey extends React.Component<Props, State> {
 
     //if current item is bigger, then animate the page to scroll down
     if (this.props.currentItemIdx > prevProps.currentItemIdx) {
-      this.setState({ totalOffset: totalOffset + currentItemHeight });
+      this.setState({ totalOffset: totalOffset - currentItemHeight });
       this.setState({ currentItemHeight: newItemHeight });
       //if the current item is smaller, then scroll back up.
     } else if (this.props.currentItemIdx < prevProps.currentItemIdx) {
-      this.setState({ totalOffset: totalOffset - currentItemHeight });
+      this.setState({ totalOffset: totalOffset + currentItemHeight });
       this.setState({ currentItemHeight: newItemHeight });
     }
   }
@@ -134,7 +134,7 @@ export default class Survey extends React.Component<Props, State> {
         </AppBar>
         <Spring
           from={{ transform: "translate(0px, 10px)" }}
-          to={{ transform: `translate(0px, ${-this.state.totalOffset}px)` }}
+          to={{ transform: `translate(0px, ${this.state.totalOffset}px)` }}
           config={{ tension: 190, friction: 30, velocity: 20, clamp: false }}
         >
           {props => {

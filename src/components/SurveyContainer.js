@@ -126,7 +126,6 @@ export default class SurveyContainer extends React.Component<Props, State> {
           buildComponent={this.buildSurveyComponent.bind(this)}
           buildHandler={this.buildHandler}
           currentItemIdx={this.state.currentItemIdx}
-          completeItem={this.completeItem.bind(this)}
           uncompleteItem={this.uncompleteItem.bind(this)}
         />
       </React.Fragment>

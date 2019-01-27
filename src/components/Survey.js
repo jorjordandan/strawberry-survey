@@ -7,7 +7,6 @@ import type {
   Options
 } from "../lib/flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
-import NextButton from "./NextButton.js";
 import SimpleSnackbar from "./Snackbar.js";
 import withAnimation from "./withAnimation.js";
 
@@ -22,7 +21,6 @@ type Props = {
     active: boolean
   ) => React$Element<any>,
   buildHandler: (type: string, idx: number) => mixed,
-  completeItem: (idx: number) => mixed,
   uncompleteItem: (idx: number) => mixed,
   getRef: () => mixed,
   currentItemIdx: number,
@@ -51,19 +49,19 @@ class Survey extends React.Component<Props, State> {
   }
 
   //don't get next button if item is required.
-  getNextButton() {
-    const idx = this.props.currentItemIdx;
-    const currentItem = this.props.items[idx];
+  // getNextButton() {
+  //   const idx = this.props.currentItemIdx;
+  //   const currentItem = this.props.items[idx];
 
-    if (!currentItem) {
-      return false;
-    }
-    if (!currentItem.required) {
-      return <NextButton onClick={() => this.props.completeItem(idx)} />;
-    } else {
-      return null;
-    }
-  }
+  //   if (!currentItem) {
+  //     return false;
+  //   }
+  //   if (!currentItem.required) {
+  //     return <NextButton onClick={() => this.props.completeItem(idx)} />;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   render() {
     return (
@@ -91,7 +89,6 @@ class Survey extends React.Component<Props, State> {
               />
             );
           })}
-        {this.getNextButton()}
 
         <SimpleSnackbar
           userMessage={this.state.userMessage}

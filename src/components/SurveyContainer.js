@@ -8,6 +8,7 @@ import type {
 } from "../lib/flowTypes.js";
 import getSurveyLib from "../lib/surveyLib";
 import Survey from "./Survey.js";
+import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 import { addPropertiesToItems } from "../lib/utilities.js";
 
@@ -18,14 +19,16 @@ type Props = {
 type State = {
   items: SurveyItemType[],
   lib: surveyLibrary,
-  currentItemIdx: number
+  currentItemIdx: number,
+  currentSectionTitle: string
 };
 
 export default class SurveyContainer extends React.Component<Props, State> {
   state = {
     items: this.props.items,
     lib: getSurveyLib(),
-    currentItemIdx: 0
+    currentItemIdx: 0,
+    currentSectionTitle: ""
   };
 
   // User provided survey objects need some extra properties added to them.
@@ -35,6 +38,22 @@ export default class SurveyContainer extends React.Component<Props, State> {
     this.setState({
       items: addPropertiesToItems(items, library)
     });
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const currentItemIdx = this.state.currentItemIdx;
+    const currentItem = this.state.items[currentItemIdx];
+
+    if (typeof currentItem === undefined) {
+      console.log("Survey done in survey");
+      return true;
+    }
+    if (
+      currentItem.sectionTitle !== undefined &&
+      currentItem.sectionTitle !== this.state.currentSectionTitle
+    ) {
+      this.setState({ currentSectionTitle: currentItem.sectionTitle });
+    }
   }
 
   // Each survey item type needs a different handler function.
@@ -93,15 +112,24 @@ export default class SurveyContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <Survey
-        items={this.state.items}
-        surveyLibrary={this.state.lib}
-        buildComponent={this.buildSurveyComponent.bind(this)}
-        buildHandler={this.buildHandler}
-        currentItemIdx={this.state.currentItemIdx}
-        completeItem={this.completeItem.bind(this)}
-        uncompleteItem={this.uncompleteItem.bind(this)}
-      />
+      <React.Fragment>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h6" color="inherit">
+              {this.state.currentSectionTitle}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Survey
+          items={this.state.items}
+          surveyLibrary={this.state.lib}
+          buildComponent={this.buildSurveyComponent.bind(this)}
+          buildHandler={this.buildHandler}
+          currentItemIdx={this.state.currentItemIdx}
+          completeItem={this.completeItem.bind(this)}
+          uncompleteItem={this.uncompleteItem.bind(this)}
+        />
+      </React.Fragment>
     );
   }
 }

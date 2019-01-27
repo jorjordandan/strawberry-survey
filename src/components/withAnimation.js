@@ -2,7 +2,6 @@ import React from "react";
 import { Spring } from "react-spring";
 
 type State = {
-  test: string,
   currentItemHeight: number,
   totalOffset: number
 };
@@ -11,9 +10,14 @@ const withAnimation = WrappedComponent => {
   return class WithAnimation extends React.Component<State> {
     constructor(props) {
       super(props);
-      this.state = { test: "test", currentItemHeight: 0, totalOffset: 0 };
+      this.state = {
+        currentItemHeight: 0,
+        totalOffset: 0
+      };
     }
+
     subElements: HTMLDivElement[] = [];
+
     componentDidMount() {
       //Get the initial item height for the animations
       const currentItemHeight =
@@ -48,6 +52,7 @@ const withAnimation = WrappedComponent => {
       if (this.props.currentItemIdx > prevProps.currentItemIdx) {
         this.setState({ totalOffset: totalOffset - currentItemHeight });
         this.setState({ currentItemHeight: newItemHeight });
+
         //if the current item is smaller, then scroll back up.
       } else if (this.props.currentItemIdx < prevProps.currentItemIdx) {
         this.setState({ totalOffset: totalOffset + currentItemHeight });
@@ -67,7 +72,6 @@ const withAnimation = WrappedComponent => {
               <div style={props}>
                 <WrappedComponent
                   {...this.props}
-                  test={this.state.test}
                   getRef={this.getRef}
                   currentItemHeight={this.state.currentItemHeight}
                   totalOffset={this.state.totalOffset}

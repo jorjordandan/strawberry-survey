@@ -2,7 +2,6 @@
 import * as React from "react";
 import type {
   SurveyItemType,
-  surveyItemState,
   surveyLibrary,
   Options
 } from "../lib/flowTypes.js";
@@ -11,6 +10,9 @@ import Survey from "./Survey.js";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 
 import { addPropertiesToItems } from "../lib/utilities.js";
+// This component is responsible for a passing the user provided survey object in
+// and tracking the index of the current item, which controls which item is active, and
+// the animations. The AppBar is also in this component.
 
 type Props = {
   items: SurveyItemType[]
@@ -72,14 +74,12 @@ export default class SurveyContainer extends React.Component<Props, State> {
   // a user provided object, and pass in all the required props.
   buildSurveyComponent(
     handler: () => mixed,
-    state: surveyItemState,
     options: Options,
     type: string,
     active: boolean
   ): React$Element<any> {
     const props = {
       onHandle: handler,
-      itemState: state,
       options: options,
       active: active
     };

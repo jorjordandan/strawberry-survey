@@ -1,12 +1,11 @@
 //@flow
 import React from "react";
 import { Button } from "@material-ui/core";
-import type { surveyItemState, Options } from "../lib/flowTypes.js";
+import type { Options } from "../lib/flowTypes.js";
 import SurveyContainer from "../components/SurveyContainer.js";
 
 type Props = {
   onHandle: (event: SyntheticEvent<>) => mixed,
-  itemState: surveyItemState,
   options: Options,
   active: boolean
 };

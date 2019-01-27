@@ -9,10 +9,12 @@ export type Options = {
   labels?: string[]
 };
 
-export type surveyItemState = {
-  checked?: boolean,
-  value?: string
-};
+export type buildComponent = (
+  handler: () => mixed,
+  options: Options | typeof undefined,
+  type: string,
+  active: boolean
+) => React$Element<any>;
 
 export type SurveyItemType = {
   question: string,
@@ -27,7 +29,6 @@ export type SurveyItemType = {
   skipped: boolean,
   response: string[],
   status?: string,
-  surveyItemState: surveyItemState,
   answer?: {
     checked?: boolean,
     value?: string

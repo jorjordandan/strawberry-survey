@@ -2,24 +2,20 @@
 import * as React from "react";
 import type {
   SurveyItemType,
-  surveyItemState,
   surveyLibrary,
-  Options
+  buildComponent
 } from "../lib/flowTypes.js";
 import SurveyItem from "./SurveyItem.js";
 import SimpleSnackbar from "./Snackbar.js";
 import withAnimation from "./withAnimation.js";
 
+// this component is responsible for passing the handler function
+// and other properties into the SurveyItem.
+// there is also a user notification snackbar that lives here.
 type Props = {
   items: SurveyItemType[],
   surveyLibrary: surveyLibrary,
-  buildComponent: (
-    handler: () => mixed,
-    state: surveyItemState,
-    options: Options | typeof undefined,
-    type: string,
-    active: boolean
-  ) => React$Element<any>,
+  buildComponent: buildComponent,
   buildHandler: (type: string, idx: number) => mixed,
   uncompleteItem: (idx: number) => mixed,
   getRef: () => mixed,
@@ -66,7 +62,6 @@ class Survey extends React.Component<Props, State> {
                 itemHeight={this.props.currentItemHeight}
                 surveyComponent={this.props.buildComponent(
                   this.props.buildHandler.bind(this, item.type, idx),
-                  item.surveyItemState,
                   item.options,
                   item.type,
                   this.props.currentItemIdx === idx

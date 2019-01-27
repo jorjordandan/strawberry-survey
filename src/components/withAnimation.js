@@ -72,7 +72,6 @@ const withAnimation = WrappedComponent => {
                   currentItemHeight={this.state.currentItemHeight}
                   totalOffset={this.state.totalOffset}
                 />
-                ;
               </div>
             );
           }}

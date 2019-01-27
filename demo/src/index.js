@@ -79,7 +79,7 @@ const SurveyOptions = {
 class Demo extends Component {
   render() {
     return (
-      <div style={{ maxHeight: "100vh" }}>
+      <div style={{ maxHeight: "100vh", overflow: "hidden" }}>
         <SurveyContainer items={survey} options={SurveyOptions} />
 
         <div className="containerStyle" />

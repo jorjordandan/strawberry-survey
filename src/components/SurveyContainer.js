@@ -44,7 +44,7 @@ export default class SurveyContainer extends React.Component<Props, State> {
     const currentItemIdx = this.state.currentItemIdx;
     const currentItem = this.state.items[currentItemIdx];
 
-    if (typeof currentItem === undefined) {
+    if (currentItem === undefined) {
       console.log("Survey done in survey");
       return true;
     }

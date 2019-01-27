@@ -48,21 +48,6 @@ class Survey extends React.Component<Props, State> {
     this.setState({ userMessage });
   }
 
-  //don't get next button if item is required.
-  // getNextButton() {
-  //   const idx = this.props.currentItemIdx;
-  //   const currentItem = this.props.items[idx];
-
-  //   if (!currentItem) {
-  //     return false;
-  //   }
-  //   if (!currentItem.required) {
-  //     return <NextButton onClick={() => this.props.completeItem(idx)} />;
-  //   } else {
-  //     return null;
-  //   }
-  // }
-
   render() {
     return (
       <React.Fragment>

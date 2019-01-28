@@ -22,7 +22,8 @@ type State = {
   items: SurveyItemType[],
   lib: surveyLibrary,
   currentItemIdx: number,
-  currentSectionTitle: string
+  currentSectionTitle: string,
+  showHeader: boolean
 };
 
 export default class SurveyContainer extends React.Component<Props, State> {
@@ -30,7 +31,8 @@ export default class SurveyContainer extends React.Component<Props, State> {
     items: this.props.items,
     lib: getSurveyLib(),
     currentItemIdx: 0,
-    currentSectionTitle: ""
+    currentSectionTitle: "",
+    showHeader: false
   };
 
   // User provided survey objects need some extra properties added to them.
@@ -55,6 +57,10 @@ export default class SurveyContainer extends React.Component<Props, State> {
       currentItem.sectionTitle !== this.state.currentSectionTitle
     ) {
       this.setState({ currentSectionTitle: currentItem.sectionTitle });
+      this.setState({ showHeader: false });
+    }
+    if (currentItem.sectionTitle === undefined && !this.state.showHeader) {
+      this.setState({ showHeader: true });
     }
   }
 
@@ -113,13 +119,16 @@ export default class SurveyContainer extends React.Component<Props, State> {
   render() {
     return (
       <React.Fragment>
-        <AppBar position="static" color="primary">
-          <Toolbar>
-            <Typography variant="h6" color="inherit">
-              {this.state.currentSectionTitle}
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        {this.state.showHeader && (
+          <AppBar position="static" color="primary">
+            <Toolbar>
+              <Typography variant="h6" color="inherit">
+                {this.state.currentSectionTitle}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        )}
+        z
         <Survey
           items={this.state.items}
           surveyLibrary={this.state.lib}

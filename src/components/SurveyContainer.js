@@ -128,7 +128,6 @@ export default class SurveyContainer extends React.Component<Props, State> {
             </Toolbar>
           </AppBar>
         )}
-        z
         <Survey
           items={this.state.items}
           surveyLibrary={this.state.lib}

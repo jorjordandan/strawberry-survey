@@ -1,11 +1,11 @@
 //@flow
 
-import * as React from "react";
-import type { SurveyItemType } from "../lib/flowTypes.js";
-import styled, { type ReactComponentStyled } from "styled-components";
-import SurveyQuestion from "./SurveyQuestion";
-import SurveyDetails from "./SurveyDetails";
-import SurveyCursor from "./SurveyCursor";
+import * as React from "react"
+import type { SurveyItemType } from "../lib/flowTypes.js"
+import styled, { type ReactComponentStyled } from "styled-components"
+import SurveyQuestion from "./SurveyQuestion"
+import SurveyDetails from "./SurveyDetails"
+import SurveyCursor from "./SurveyCursor"
 
 type Props = {
   item: SurveyItemType,
@@ -17,7 +17,7 @@ type Props = {
   itemHeight: number,
   getRef: (ref: any, i: number) => mixed,
   uncompleteItem: (idx: number) => mixed
-};
+}
 
 type State = {
   answer: string[],
@@ -31,7 +31,7 @@ type State = {
     paddingBottom: string,
     paddingTop: string
   }
-};
+}
 
 class SurveyItem extends React.Component<Props, State> {
   state = {
@@ -39,12 +39,12 @@ class SurveyItem extends React.Component<Props, State> {
     checked: false,
     optionalStyle: {},
     animation: ""
-  };
+  }
 
-  itemEl: ?HTMLDivElement;
+  itemEl: ?HTMLDivElement
 
   componentDidMount() {
-    this.props.getRef(this.itemEl, this.props.idx);
+    this.props.getRef(this.itemEl, this.props.idx)
     if (this.props.item.type === "section") {
       this.setState({
         optionalStyle: {
@@ -52,40 +52,32 @@ class SurveyItem extends React.Component<Props, State> {
           paddingBottom: "200px",
           paddingTop: "200px"
         }
-      });
+      })
     }
   }
 
   componentDidUpdate(prevProps: Props) {
-    let animation: string = "";
-    if (
-      prevProps.active !== this.props.active ||
-      prevProps.completed !== this.props.completed
-    ) {
+    let animation: string = ""
+    if (prevProps.active !== this.props.active || prevProps.completed !== this.props.completed) {
       if (this.props.completed) {
-        animation = "wiggle";
+        animation = "wiggle"
       }
       if (this.props.active) {
-        animation = "show";
+        animation = "show"
       }
       if (this.props.active && this.props.completed) {
-        animation = "wiggle";
+        animation = "wiggle"
       }
 
-      this.setState({ animation: animation });
+      this.setState({ animation: animation })
     }
   }
 
   getDetailsIfExist() {
     if (this.props.item.details) {
-      return (
-        <SurveyDetails
-          details={this.props.item.details}
-          active={this.props.active}
-        />
-      );
+      return <SurveyDetails details={this.props.item.details} active={this.props.active} />
     } else {
-      return null;
+      return null
     }
   }
 
@@ -95,14 +87,14 @@ class SurveyItem extends React.Component<Props, State> {
       this.props.item.completed === true &&
       this.props.idx < this.props.currentItemIdx
     ) {
-      this.props.uncompleteItem(this.props.idx);
+      this.props.uncompleteItem(this.props.idx)
     }
   }
 
   render() {
     const {
       item: { question, required }
-    } = this.props;
+    } = this.props
     return (
       <div>
         {this.props.item.type !== "section" && (
@@ -129,7 +121,7 @@ class SurveyItem extends React.Component<Props, State> {
           {this.props.surveyComponent}
         </SurveyItemContainer>
       </div>
-    );
+    )
   }
 }
 
@@ -138,6 +130,6 @@ const SurveyItemContainer: ReactComponentStyled<any> = styled.div`
   .inactive {
     opacity: 0.1;
   }
-`;
+`
 
-export default SurveyItem;
+export default SurveyItem

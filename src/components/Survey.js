@@ -1,20 +1,15 @@
 //@flow
-import * as React from "react";
-import type {
-  SurveyItemType,
-  surveyLibrary,
-  buildComponent
-} from "../lib/flowTypes.js";
-import SurveyItem from "./SurveyItem.js";
-import SimpleSnackbar from "./Snackbar.js";
-import withAnimation from "./withAnimation.js";
+import * as React from "react"
+import type { SurveyItemType, buildComponent } from "../lib/flowTypes.js"
+import SurveyItem from "./SurveyItem.js"
+import SimpleSnackbar from "./Snackbar.js"
+import withAnimation from "./withAnimation.js"
 
 // this component is responsible for passing the handler function
 // and other properties into the SurveyItem.
 // there is also a user notification snackbar that lives here.
 type Props = {
   items: SurveyItemType[],
-  surveyLibrary: surveyLibrary,
   buildComponent: buildComponent,
   buildHandler: (type: string, idx: number) => mixed,
   uncompleteItem: (idx: number) => mixed,
@@ -22,14 +17,14 @@ type Props = {
   currentItemIdx: number,
   currentItemHeight: number,
   totalOffset: number
-};
+}
 
 type State = {
   userMessage: {
     type: string,
     content: string
   }
-};
+}
 
 class Survey extends React.Component<Props, State> {
   state = {
@@ -37,11 +32,11 @@ class Survey extends React.Component<Props, State> {
       type: "none",
       content: ""
     }
-  };
+  }
 
   handleCloseSnackbar() {
-    const userMessage = { type: "none", content: "" };
-    this.setState({ userMessage });
+    const userMessage = { type: "none", content: "" }
+    this.setState({ userMessage })
   }
 
   render() {
@@ -67,7 +62,7 @@ class Survey extends React.Component<Props, State> {
                   this.props.currentItemIdx === idx
                 )}
               />
-            );
+            )
           })}
 
         <SimpleSnackbar
@@ -75,8 +70,8 @@ class Survey extends React.Component<Props, State> {
           handleClose={this.handleCloseSnackbar.bind(this)}
         />
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default withAnimation(Survey);
+export default withAnimation(Survey)

@@ -1,7 +1,7 @@
 //@flow
 
-import React, { Component } from "react";
-import "./index.css";
+import React, { Component } from "react"
+import "./index.css"
 
 export default class Survey extends Component<void> {
   render() {
@@ -9,6 +9,6 @@ export default class Survey extends Component<void> {
       <div className="s-holder">
         <div>test</div>
       </div>
-    );
+    )
   }
 }

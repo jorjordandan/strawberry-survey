@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import SurveyContainer from "../../src/components/SurveyContainer.js";
+import React, { Component } from "react"
+import { render } from "react-dom"
+import SurveyContainer from "../../src/components/SurveyContainer.js"
 
 const survey = [
   {
@@ -29,12 +29,7 @@ const survey = [
     question: "What is your robo-type?",
     type: "multiChoice",
     options: {
-      labels: [
-        "good robot",
-        "bad Robot",
-        "nefarious robot",
-        "existential questions robot"
-      ]
+      labels: ["good robot", "bad Robot", "nefarious robot", "existential questions robot"]
     },
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }], //placeholder
     responses: []
@@ -70,11 +65,11 @@ const survey = [
     skip: [{ to: "a", if: "a" }, { to: "b", if: "b" }],
     responses: []
   }
-];
+]
 
 const SurveyOptions = {
   forwardOnly: true
-};
+}
 
 class Demo extends Component {
   render() {
@@ -84,8 +79,8 @@ class Demo extends Component {
 
         <div className="containerStyle" />
       </div>
-    );
+    )
   }
 }
 
-render(<Demo />, document.querySelector("#demo"));
+render(<Demo />, document.querySelector("#demo"))

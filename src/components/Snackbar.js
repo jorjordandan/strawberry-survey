@@ -1,8 +1,8 @@
 // @flow
-import React from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import React from "react"
+import Snackbar from "@material-ui/core/Snackbar"
+import IconButton from "@material-ui/core/IconButton"
+import CloseIcon from "@material-ui/icons/Close"
 
 type Props = {
   userMessage: {
@@ -10,13 +10,13 @@ type Props = {
     content: string
   },
   handleClose: () => mixed
-};
+}
 
 function checkOpen(message) {
   if (message.type === "none") {
-    return false;
+    return false
   } else {
-    return true;
+    return true
   }
 }
 
@@ -48,7 +48,7 @@ function SimpleSnackbar(props: Props) {
         ]}
       />
     </div>
-  );
+  )
 }
 
-export default SimpleSnackbar;
+export default SimpleSnackbar

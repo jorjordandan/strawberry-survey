@@ -1,6 +1,6 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
+import React from "react"
+import Button from "@material-ui/core/Button"
+import { withStyles } from "@material-ui/core/styles"
 
 const styles = theme => ({
   button: {
@@ -9,21 +9,16 @@ const styles = theme => ({
   input: {
     display: "none"
   }
-});
+})
 
 function NextButton(props) {
   return (
     <div>
-      <Button
-        variant="outlined"
-        color="primary"
-        size="large"
-        onClick={props.onClick}
-      >
+      <Button variant="outlined" color="primary" size="large" onClick={props.onClick}>
         Next
       </Button>
     </div>
-  );
+  )
 }
 
-export default withStyles(styles)(NextButton);
+export default withStyles(styles)(NextButton)

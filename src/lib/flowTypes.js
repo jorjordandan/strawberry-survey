@@ -1,5 +1,5 @@
 //@flow
-import type { sectionProps } from "../components/SurveySection";
+import type { sectionProps } from "../components/SurveySection"
 
 export type Options = {
   forwardOnly?: boolean,
@@ -7,14 +7,14 @@ export type Options = {
   helperText?: string,
   nextButtonText?: string,
   labels?: string[]
-};
+}
 
 export type buildComponent = (
   handler: () => mixed,
   options: Options | typeof undefined,
   type: string,
   active: boolean
-) => React$Element<any>;
+) => React$Element<any>
 
 export type SurveyItemType = {
   question: string,
@@ -33,7 +33,7 @@ export type SurveyItemType = {
     checked?: boolean,
     value?: string
   }
-};
+}
 
 export type surveyLibrary = {
   checkbox?: {
@@ -48,4 +48,4 @@ export type surveyLibrary = {
     component: Class<any>,
     handler: () => mixed
   }
-};
+}

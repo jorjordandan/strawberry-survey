@@ -1,34 +1,34 @@
 //@flow
-import React from "react";
-import { Radio, RadioGroup, FormControlLabel, Button } from "@material-ui/core";
-import type { Options } from "../lib/flowTypes.js";
-import { getStates } from "../lib/utilities.js";
-import SurveyContainer from "../components/SurveyContainer.js";
+import React from "react"
+import { Radio, RadioGroup, FormControlLabel, Button } from "@material-ui/core"
+import type { Options } from "../lib/flowTypes.js"
+import { getStates } from "../lib/utilities.js"
+import SurveyContainer from "../components/SurveyContainer.js"
 
 type Props = {
   onHandle: (event: SyntheticEvent<>) => mixed,
   options: Options,
   active: boolean
-};
+}
 
 type State = {
   selectedValue: string
-};
+}
 
 class SurveyMultiChoice extends React.Component<Props, State> {
   state = {
     selectedValue: ""
-  };
+  }
 
   onClick = (e: SyntheticEvent<HTMLInputElement>) => {
     // eslint-disable-next-line no-unused-expressions
-    (e.currentTarget: HTMLInputElement);
-    let val = e.currentTarget.value;
-    console.log(val);
+    ;(e.currentTarget: HTMLInputElement)
+    let val = e.currentTarget.value
+    console.log(val)
     this.setState({
       selectedValue: val
-    });
-  };
+    })
+  }
 
   render() {
     return (
@@ -55,7 +55,7 @@ class SurveyMultiChoice extends React.Component<Props, State> {
           Submit
         </Button>
       </form>
-    );
+    )
   }
 }
 
@@ -65,32 +65,32 @@ const multiChoiceHandler = () => {
     ctx: React$ElementRef<typeof SurveyContainer>,
     idx: number
   ) => {
-    event.preventDefault();
+    event.preventDefault()
     //return two copies of state...
-    const { newState } = getStates(ctx);
-    const state = newState[idx];
+    const { newState } = getStates(ctx)
+    const state = newState[idx]
     // eslint-disable-next-line no-unused-expressions
-    (event.currentTarget: HTMLElement);
-    const inputVals = event.currentTarget.getElementsByTagName("input");
-    let answer = "none";
+    ;(event.currentTarget: HTMLElement)
+    const inputVals = event.currentTarget.getElementsByTagName("input")
+    let answer = "none"
     for (let item of inputVals) {
       if (item.checked) {
-        answer = item.value;
+        answer = item.value
       }
     }
 
     state.answer = {
       answer: answer
-    };
-    state.completed = true;
-    state.skipped = false;
+    }
+    state.completed = true
+    state.skipped = false
     //.. and replace the old state.
-    ctx.setState({ items: newState });
+    ctx.setState({ items: newState })
 
-    ctx.completeItem(idx);
-  };
-};
+    ctx.completeItem(idx)
+  }
+}
 
-export default SurveyMultiChoice;
-export { multiChoiceHandler };
-export type { Props as multiChoiceProps };
+export default SurveyMultiChoice
+export { multiChoiceHandler }
+export type { Props as multiChoiceProps }
